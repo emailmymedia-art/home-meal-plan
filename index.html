@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weekly Meal Planner Menu</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap');
+        
+        .font-playfair { font-family: 'Playfair Display', serif; }
+        .font-inter { font-family: 'Inter', sans-serif; }
+        
+        .meal-card {
+            transition: all 0.3s ease;
+            border-left: 4px solid transparent;
+        }
+        
+        .meal-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            border-left-color: #f59e0b;
+        }
+        
+        .meal-card.current-day {
+            border-left-color: #dc2626;
+            background: linear-gradient(135deg, #fef2f2, #ffffff);
+            box-shadow: 0 4px 15px rgba(220, 38, 38, 0.2);
+        }
+        
+        .meal-card.past-day {
+            border-left-color: #16a34a;
+            background: linear-gradient(135deg, #f0fdf4, #f9fafb);
+            opacity: 0.8;
+        }
+        
+        .meal-card.upcoming-day {
+            border-left-color: #3b82f6;
+            background: linear-gradient(135deg, #eff6ff, #ffffff);
+        }
+        
+        .week-header {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+        }
+        
+        .day-label {
+            background: linear-gradient(135deg, #065f46, #047857);
+        }
+        
+        .day-label.current {
+            background: linear-gradient(135deg, #dc2626, #b91c1c);
+            animation: pulse 2s infinite;
+        }
+        
+        .day-label.past {
+            background: linear-gradient(135deg, #16a34a, #15803d);
+        }
+        
+        .day-label.upcoming {
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+        }
+        
+        .time-badge {
+            background: linear-gradient(135deg, #7c3aed, #5b21b6);
+        }
+        
+        .rest-day {
+            background: linear-gradient(135deg, #f3f4f6, #e5e7eb);
+            border: 2px dashed #9ca3af;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-orange-50 to-amber-50 min-h-screen font-inter">
+    <!-- Header -->
+    <header class="text-center py-12 bg-white shadow-sm">
+        <div class="flex justify-center items-center gap-3 mb-4">
+            <span class="text-4xl">🍴</span>
+            <h1 class="font-playfair text-4xl font-bold text-gray-800">Meal Planner Menu</h1>
+        </div>
+        <p class="text-gray-600 text-lg font-light">Weekly Home Meal Planning</p>
+        <div class="mt-4 flex justify-center">
+            <div class="w-24 h-0.5 bg-gradient-to-r from-amber-400 to-orange-400"></div>
+        </div>
+    </header>
+
+    <div class="max-w-7xl mx-auto px-6 py-12">
+        <!-- Week 1 -->
+        <section class="mb-16">
+            <div class="week-header text-white text-center py-6 rounded-t-lg mb-8">
+                <h2 class="font-playfair text-3xl font-bold">WEEK 1 – MEAL PLAN</h2>
+            </div>
+            
+            <div class="space-y-6">
+                <!-- Friday -->
+                <div class="meal-card bg-white rounded-lg p-6 shadow-md">
+                    <div class="day-label text-white px-4 py-2 rounded-lg inline-block mb-4">
+                        <h3 class="font-semibold text-lg">Friday</h3>
+                    </div>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <h4 class="font-semibold text-amber-700 mb-3 text-lg">Breakfast</h4>
+                            <p class="text-gray-700 leading-relaxed">Pancakes, Beacon, Sausages, Blueberries, Scrambled Egg, Tea (top tea), Peak, Milk/Almond, Sugar & Honey</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-amber-700 mb-3 text-lg">Dinner</h4>
+                            <p class="text-gray-700 leading-relaxed">Mash Potatoes, Steak/Salmon/Lamb chops, Veggie Sauce: Broccoli, Cauliflower, All Coloured Pepper, Mushroom, 1 cup cold almond milk</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Saturday -->
+                <div class="meal-card bg-white rounded-lg p-6 shadow-md">
+                    <div class="day-label text-white px-4 py-2 rounded-lg inline-block mb-4">
+                        <h3 class="font-semibold text-lg">Saturday</h3>
+                    </div>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <h4 class="font-semibold text-amber-700 mb-3 text-lg">Breakfast</h4>
+                            <p class="text-gray-700 leading-relaxed">Pap, Akara, Beans, Un-Slice Bread, Milk and Sugar</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-amber-700 mb-3 text-lg">Dinner</h4>
+                            <p class="text-gray-700 leading-relaxed">Banga Soup, Bush Meat: Grasscutter, Antelope Lap, Bush Meat, Well fried Beef, Perewinkle, Starch/eba</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sunday -->
+                <div class="meal-card bg-white rounded-lg p-6 shadow-md">
+                    <div class="day-label text-white px-4 py-2 rounded-lg inline-block mb-4">
+                        <h3 class="font-semibold text-lg">Sunday</h3>
+                    </div>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <h4 class="font-semibold text-amber-700 mb-3 text-lg">Breakfast</h4>
+                            <p class="text-gray-700 leading-relaxed">Club Sandwich, Pickle, Ham/Bacon, SSE (egg), Avocado Paste, French Fries, Potato Wedges, 1 cup almond milk, Ketchup, Peper sauce</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-amber-700 mb-3 text-lg">Dinner</h4>
+                            <p class="text-gray-700 leading-relaxed">Basmati White Rice, Sweet Red Stew, Fried Live Chicken or Guinea Fowl, Well Fried Diced Beef, Well Fried Turkey, Banana, Maltina</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Monday -->
+                <div class="meal-card bg-white rounded-lg p-6 shadow-md">
+                    <div class="day-label text-white px-4 py-2 rounded-lg inline-block mb-4">
+                        <h3 class="font-semibold text-lg">Monday</h3>
+                    </div>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <h4 class="font-semibold text-amber-700 mb-3 text-lg">Breakfast</h4>
+                            <p class="text-gray-700 leading-relaxed">Couscous, All Coloured Bell Pepper, Salmon, Avocado Slice, Red Apple Slice with Cinnamon, Fresh Juice: Pineapple, Orange</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-amber-700 mb-3 text-lg">Dinner</h4>
+                            <p class="text-gray-700 leading-relaxed">Alfredo Pasta, Mushroom, Diced Chicken, Prawns, Coke/Fanta or Bottled Juice</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tuesday -->
+                <div class="meal-card bg-white rounded-lg p-6 shadow-md">
+                    <div class="day-label text-white px-4 py-2 rounded-lg inline-block mb-4">
+                        <h3 class="font-semibold text-lg">Tuesday</h3>
+                    </div>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <h4 class="font-semibold text-amber-700 mb-3 text-lg">Breakfast</h4>
+                            <p class="text-gray-700 leading-relaxed">Egg Sauce, Fried Plantain, Fried Sweet Potato, Fried Yam, Avocado Slice, Fresh Pineapple Juice</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-amber-700 mb-3 text-lg">Dinner</h4>
+                            <p class="text-gray-700 leading-relaxed"><strong>Jollof Rice</strong>, Beans, Black Roasted chicken, Well Fried Big Snail & Turkey, Plantain, Vegetable Sauce: Egu & Shoko, Coke/Fanta or Bottled Juice</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Wednesday & Thursday - Rest Days -->
+                <div class="rest-day rounded-lg p-6 text-center">
+                    <h3 class="font-playfair text-xl font-semibold text-gray-600 mb-2">🌟 Wednesday & Thursday</h3>
+                    <p class="text-gray-500 text-lg">Days off - Freestyle at home</p>
+                </div>
+            </div>
+
+            <!-- Week 1 Timing -->
+            <div class="text-center mt-8">
+                <div class="time-badge text-white px-6 py-3 rounded-full inline-block">
+                    <span class="text-lg">⏰ Breakfast 6AM • Brunch 12PM • Dinner 7PM</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Week 2 -->
+        <section class="mb-16">
+            <div class="week-header text-white text-center py-6 rounded-t-lg mb-8">
+                <h2 class="font-playfair text-3xl font-bold">WEEK 2 – MEAL PLAN</h2>
+            </div>
+            
+            <div class="space-y-6">
+                <!-- Friday -->
+                <div class="meal-card bg-white rounded-lg p-6 shadow-md">
+                    <div class="day-label text-white px-4 py-2 rounded-lg inline-block mb-4">
+                        <h3 class="font-semibold text-lg">Friday</h3>
+                    </div>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <h4 class="font-semibold text-amber-700 mb-3 text-lg">Breakfast</h4>
+                            <p class="text-gray-700 leading-relaxed">Mix lentil, Chicken Cream Sauce, Pineapple Juice</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-amber-700 mb-3 text-lg">Dinner</h4>
+                            <p class="text-gray-700 leading-relaxed">White Soup, Fresh Catfish, Pork (beef part), Soft Brisket bone, Smoke Titus, Eba</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Saturday -->
+                <div class="meal-card bg-white rounded-lg p-6 shadow-md">
+                    <div class="day-label text-white px-4 py-2 rounded-lg inline-block mb-4">
+                        <h3 class="font-semibold text-lg">Saturday</h3>
+                    </div>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <h4 class="font-semibold text-amber-700 mb-3 text-lg">Breakfast</h4>
+                            <p class="text-gray-700 leading-relaxed">Plantain Mio Mio, Diced Fried Gizzard, All Coloured Bell Pepper, Pepper Sauce, Coleslaw, Avocado, Orange Juice</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-amber-700 mb-3 text-lg">Dinner</h4>
+                            <p class="text-gray-700 leading-relaxed">BBQ Catfish, Plantain, French Fries, Avocado Pasta, Coleslaw, Maltina</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sunday -->
+                <div class="meal-card bg-white rounded-lg p-6 shadow-md">
+                    <div class="day-label text-white px-4 py-2 rounded-lg inline-block mb-4">
+                        <h3 class="font-semibold text-lg">Sunday</h3>
+                    </div>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <h4 class="font-semibold text-amber-700 mb-3 text-lg">Breakfast</h4>
+                            <p class="text-gray-700 leading-relaxed">Burger, Lettuce, Cheese, Pickle, Chicken or Beef, Mayo Mix Sauce, Fries, 1 cup of Almond Milk, Ham/Bacon, ketchup+peper sauce</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-amber-700 mb-3 text-lg">Dinner</h4>
+                            <p class="text-gray-700 leading-relaxed">Normal White Rice, Sweet Red Stew, All Assorted, Kpomo, Fried Plantain, Maltina</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Monday -->
+                <div class="meal-card bg-white rounded-lg p-6 shadow-md">
+                    <div class="day-label text-white px-4 py-2 rounded-lg inline-block mb-4">
+                        <h3 class="font-semibold text-lg">Monday</h3>
+                    </div>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <h4 class="font-semibold text-amber-700 mb-3 text-lg">Breakfast</h4>
+                            <p class="text-gray-700 leading-relaxed">Hashbrown, SSE (egg), Beacon, Sausages, Avocado Paste, Whip Cream, Ketchup, peper sauce, Orange Juice</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-amber-700 mb-3 text-lg">Dinner</h4>
+                            <p class="text-gray-700 leading-relaxed">Porridge, Beans, Yam, Sweet Potatoes, Ripe Plantain, Diced Beef, Coke/Fanta</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tuesday -->
+                <div class="meal-card bg-white rounded-lg p-6 shadow-md">
+                    <div class="day-label text-white px-4 py-2 rounded-lg inline-block mb-4">
+                        <h3 class="font-semibold text-lg">Tuesday</h3>
+                    </div>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <h4 class="font-semibold text-amber-700 mb-3 text-lg">Breakfast</h4>
+                            <p class="text-gray-700 leading-relaxed"><strong>Noodles</strong>, Diced chicken, All Coloured Bell Pepper, Pickle, Tasty Broccoli, Omelet Egg, Fresh Orange Juice</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-amber-700 mb-3 text-lg">Dinner</h4>
+                            <p class="text-gray-700 leading-relaxed">Chinese Fried Rice, Eggs in rice, Steak/Salmon/Lamb chops, Orange Juice</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Wednesday & Thursday - Rest Days -->
+                <div class="rest-day rounded-lg p-6 text-center">
+                    <h3 class="font-playfair text-xl font-semibold text-gray-600 mb-2">🌟 Wednesday & Thursday</h3>
+                    <p class="text-gray-500 text-lg">Days off - Freestyle at home</p>
+                </div>
+            </div>
+
+            <!-- Week 2 Timing -->
+            <div class="text-center mt-8">
+                <div class="time-badge text-white px-6 py-3 rounded-full inline-block">
+                    <span class="text-lg">⏰ Breakfast 6AM • Brunch 12PM • Dinner 7PM</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Week 3 -->
+        <section class="mb-16">
+            <div class="week-header text-white text-center py-6 rounded-t-lg mb-8">
+                <h2 class="font-playfair text-3xl font-bold">WEEK 3 – MEAL PLAN</h2>
+            </div>
+            
+            <div class="space-y-6">
+                <!-- Friday -->
+                <div class="meal-card bg-white rounded-lg p-6 shadow-md">
+                    <div class="day-label text-white px-4 py-2 rounded-lg inline-block mb-4">
+                        <h3 class="font-semibold text-lg">Friday</h3>
+                    </div>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <h4 class="font-semibold text-amber-700 mb-3 text-lg">Breakfast</h4>
+                            <p class="text-gray-700 leading-relaxed">Boiled Yam, Sweet Potatoes, Ripe Plantain, Vegetable Sauce, Smoked Titus Fish, Orange Juice</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-amber-700 mb-3 text-lg">Dinner</h4>
+                            <p class="text-gray-700 leading-relaxed">Caesar Salad with Rotini Pasta, Diced chicken, Diced bread, Lettuce, Cucumber, Cherry tomatoes, Parmesan Cheese, Parsley, Pickle, Raisins, Orange juice</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Saturday -->
+                <div class="meal-card bg-white rounded-lg p-6 shadow-md">
+                    <div class="day-label text-white px-4 py-2 rounded-lg inline-block mb-4">
+                        <h3 class="font-semibold text-lg">Saturday</h3>
+                    </div>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <h4 class="font-semibold text-amber-700 mb-3 text-lg">Breakfast</h4>
+                            <p class="text-gray-700 leading-relaxed"><strong>Chinese Beef and Broccoli sauce</strong>, Boiled Basmati rice, Pineapple Juice</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-amber-700 mb-3 text-lg">Dinner</h4>
+                            <p class="text-gray-700 leading-relaxed">Ukodo: Yam and Unripe Plantain Pepper Soup, Live Chicken, Goat Meat, Fruits slice as sides</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sunday -->
+                <div class="meal-card bg-white rounded-lg p-6 shadow-md">
+                    <div class="day-label text-white px-4 py-2 rounded-lg inline-block mb-4">
+                        <h3 class="font-semibold text-lg">Sunday</h3>
+                    </div>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <h4 class="font-semibold text-amber-700 mb-3 text-lg">Breakfast</h4>
+                            <p class="text-gray-700 leading-relaxed"><strong>Fried Croaker or Fried Red Snapper</strong>, French Fries, Coleslaw, Pepper sauce and Ketchup, Orange Juice</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-amber-700 mb-3 text-lg">Dinner</h4>
+                            <p class="text-gray-700 leading-relaxed">Brown Rice, Sweet Red Stew, Well Fried Red Snapper, Well Fried Catfish, Banana or plantain, Maltina</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Monday -->
+                <div class="meal-card bg-white rounded-lg p-6 shadow-md">
+                    <div class="day-label text-white px-4 py-2 rounded-lg inline-block mb-4">
+                        <h3 class="font-semibold text-lg">Monday</h3>
+                    </div>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <h4 class="font-semibold text-amber-700 mb-3 text-lg">Breakfast</h4>
+                            <p class="text-gray-700 leading-relaxed">Chicken & beef Shawarma/Tacos, Avocado paste, Orange and Pineapple Juice</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-amber-700 mb-3 text-lg">Dinner</h4>
+                            <p class="text-gray-700 leading-relaxed">Egusi Soup, egu vegi, shoko vegi, Goat Meat, live cook Chicken, smoked titus, Well fried beef, Perewinkle</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tuesday -->
+                <div class="meal-card bg-white rounded-lg p-6 shadow-md">
+                    <div class="day-label text-white px-4 py-2 rounded-lg inline-block mb-4">
+                        <h3 class="font-semibold text-lg">Tuesday</h3>
+                    </div>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <h4 class="font-semibold text-amber-700 mb-3 text-lg">Breakfast</h4>
+                            <p class="text-gray-700 leading-relaxed">Spaghetti Bolognese, 1 cup of cold Almond Milk</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-amber-700 mb-3 text-lg">Dinner</h4>
+                            <p class="text-gray-700 leading-relaxed">Ofada Rice and Sauce, Assorted, Fried Plantain, Maltina</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Wednesday & Thursday - Rest Days -->
+                <div class="rest-day rounded-lg p-6 text-center">
+                    <h3 class="font-playfair text-xl font-semibold text-gray-600 mb-2">🌟 Wednesday & Thursday</h3>
+                    <p class="text-gray-500 text-lg">Days off - Freestyle at home</p>
+                </div>
+            </div>
+
+            <!-- Week 3 Timing -->
+            <div class="text-center mt-8">
+                <div class="time-badge text-white px-6 py-3 rounded-full inline-block">
+                    <span class="text-lg">⏰ Breakfast 6AM • Brunch 12PM • Dinner 7PM</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Week 4 -->
+        <section class="mb-16">
+            <div class="week-header text-white text-center py-6 rounded-t-lg mb-8">
+                <h2 class="font-playfair text-3xl font-bold">WEEK 4 – MEAL PLAN</h2>
+            </div>
+            
+            <div class="space-y-6">
+                <!-- Friday -->
+                <div class="meal-card bg-white rounded-lg p-6 shadow-md">
+                    <div class="day-label text-white px-4 py-2 rounded-lg inline-block mb-4">
+                        <h3 class="font-semibold text-lg">Friday</h3>
+                    </div>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <h4 class="font-semibold text-amber-700 mb-3 text-lg">Breakfast</h4>
+                            <p class="text-gray-700 leading-relaxed">Pancakes, Beacon, Sausages, Blueberries, Scrambled Egg, Tea (top tea), Peak, Milk/Almond, Sugar & Honey</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-amber-700 mb-3 text-lg">Dinner</h4>
+                            <p class="text-gray-700 leading-relaxed">Efo Ri Ro, Well fried red snapper, Shaki, kopmor, Smoked mackerel/Smoke titus, Perewinkle</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Saturday -->
+                <div class="meal-card bg-white rounded-lg p-6 shadow-md">
+                    <div class="day-label text-white px-4 py-2 rounded-lg inline-block mb-4">
+                        <h3 class="font-semibold text-lg">Saturday</h3>
+                    </div>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <h4 class="font-semibold text-amber-700 mb-3 text-lg">Breakfast</h4>
+                            <p class="text-gray-700 leading-relaxed">Pap, Akara, Beans, Un-Slice Bread, Milk and Sugar</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-amber-700 mb-3 text-lg">Dinner</h4>
+                            <p class="text-gray-700 leading-relaxed">Chicken Curry, irish and sweet potatoes, Live Chicken, Banana, Fresh Juice: Pineapple, Orange</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sunday -->
+                <div class="meal-card bg-white rounded-lg p-6 shadow-md">
+                    <div class="day-label text-white px-4 py-2 rounded-lg inline-block mb-4">
+                        <h3 class="font-semibold text-lg">Sunday</h3>
+                    </div>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <h4 class="font-semibold text-amber-700 mb-3 text-lg">Breakfast</h4>
+                            <p class="text-gray-700 leading-relaxed">Club Sandwich, Pickle, Ham/Bacon, SSE (egg), Avocado Paste, French Fries, Potato Wedges, 1 cup almond milk, Ketchup, Peper sauce</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-amber-700 mb-3 text-lg">Dinner</h4>
+                            <p class="text-gray-700 leading-relaxed">Basmati White Rice, Sweet Red Stew, Fried Live Chicken, Well Fried Diced Beef, Well Fried Turkey, Banana, Maltina</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Monday -->
+                <div class="meal-card bg-white rounded-lg p-6 shadow-md">
+                    <div class="day-label text-white px-4 py-2 rounded-lg inline-block mb-4">
+                        <h3 class="font-semibold text-lg">Monday</h3>
+                    </div>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <h4 class="font-semibold text-amber-700 mb-3 text-lg">Breakfast</h4>
+                            <p class="text-gray-700 leading-relaxed">Couscous, All Coloured Bell Pepper, Salmon, Avocado Slice, Red Apple Slice with Cinnamon, Fresh Juice: Pineapple, Orange</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-amber-700 mb-3 text-lg">Dinner</h4>
+                            <p class="text-gray-700 leading-relaxed">Ogbono soup, Goat Meat, Beef, Smoked Horse mackerel/Smoke titus, Bonga fish, Perewinkle</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tuesday -->
+                <div class="meal-card bg-white rounded-lg p-6 shadow-md">
+                    <div class="day-label text-white px-4 py-2 rounded-lg inline-block mb-4">
+                        <h3 class="font-semibold text-lg">Tuesday</h3>
+                    </div>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <h4 class="font-semibold text-amber-700 mb-3 text-lg">Breakfast</h4>
+                            <p class="text-gray-700 leading-relaxed">Egg Sauce, Fried Plantain, Fried Sweet Potato, Fried Yam, Avocado Slice, Fresh Pineapple Juice</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-amber-700 mb-3 text-lg">Dinner</h4>
+                            <p class="text-gray-700 leading-relaxed">Normal White rice, Fresh Catfish Pepper Soup, Fruits slice as side</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Wednesday & Thursday - Rest Days -->
+                <div class="rest-day rounded-lg p-6 text-center">
+                    <h3 class="font-playfair text-xl font-semibold text-gray-600 mb-2">🌟 Wednesday & Thursday</h3>
+                    <p class="text-gray-500 text-lg">Days off - Freestyle at home</p>
+                </div>
+            </div>
+
+            <!-- Week 4 Timing -->
+            <div class="text-center mt-8">
+                <div class="time-badge text-white px-6 py-3 rounded-full inline-block">
+                    <span class="text-lg">⏰ Breakfast 6AM • Brunch 12PM • Dinner 7PM</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Week 5 -->
+        <section class="mb-16">
+            <div class="week-header text-white text-center py-6 rounded-t-lg mb-8">
+                <h2 class="font-playfair text-3xl font-bold">WEEK 5 – MEAL PLAN</h2>
+            </div>
+            
+            <div class="space-y-6">
+                <!-- Friday -->
+                <div class="meal-card bg-white rounded-lg p-6 shadow-md">
+                    <div class="day-label text-white px-4 py-2 rounded-lg inline-block mb-4">
+                        <h3 class="font-semibold text-lg">Friday</h3>
+                    </div>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <h4 class="font-semibold text-amber-700 mb-3 text-lg">Breakfast</h4>
+                            <p class="text-gray-700 leading-relaxed">Mix lentil, Chicken Cream Sauce, Pineapple Juice</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-amber-700 mb-3 text-lg">Dinner</h4>
+                            <p class="text-gray-700 leading-relaxed">Oha soup – Real Cocoyam, Goat meat, Pork Beef, Smoked Titus Fish, Eba</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Saturday -->
+                <div class="meal-card bg-white rounded-lg p-6 shadow-md">
+                    <div class="day-label text-white px-4 py-2 rounded-lg inline-block mb-4">
+                        <h3 class="font-semibold text-lg">Saturday</h3>
+                    </div>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <h4 class="font-semibold text-amber-700 mb-3 text-lg">Breakfast</h4>
+                            <p class="text-gray-700 leading-relaxed">Plantain Mio Mio, Diced Fried Gizzard, All Coloured Bell Pepper, Pepper Sauce, Coleslaw, Avocado, Orange Juice</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-amber-700 mb-3 text-lg">Dinner</h4>
+                            <p class="text-gray-700 leading-relaxed">iJebu Egusi, Cowleg, Shaki, Dried Catfish, Smoked Titus fish, Perewinkle, Eba</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sunday -->
+                <div class="meal-card bg-white rounded-lg p-6 shadow-md">
+                    <div class="day-label text-white px-4 py-2 rounded-lg inline-block mb-4">
+                        <h3 class="font-semibold text-lg">Sunday</h3>
+                    </div>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <h4 class="font-semibold text-amber-700 mb-3 text-lg">Breakfast</h4>
+                            <p class="text-gray-700 leading-relaxed">Burger, Lettuce, Cheese, Pickle, Chicken or Beef, Mayo Mix Sauce, Fries, 1 cup of Almond Milk, Ham/Bacon, ketchup+peper sauce</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-amber-700 mb-3 text-lg">Dinner</h4>
+                            <p class="text-gray-700 leading-relaxed">Normal White Rice, Sweet Red Stew, All Assorted, Kpomo, Fried Plantain, Maltina</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Monday -->
+                <div class="meal-card bg-white rounded-lg p-6 shadow-md">
+                    <div class="day-label text-white px-4 py-2 rounded-lg inline-block mb-4">
+                        <h3 class="font-semibold text-lg">Monday</h3>
+                    </div>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <h4 class="font-semibold text-amber-700 mb-3 text-lg">Breakfast</h4>
+                            <p class="text-gray-700 leading-relaxed">Hashbrown, SSE (egg), Beacon, Sausages, Avocado Paste, Whip Cream, Ketchup, peper sauce, Orange Juice</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-amber-700 mb-3 text-lg">Dinner</h4>
+                            <p class="text-gray-700 leading-relaxed">Edikaikong, All Assorted and Shaki, Beef, Perewinkle, Pounded Yam</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tuesday -->
+                <div class="meal-card bg-white rounded-lg p-6 shadow-md">
+                    <div class="day-label text-white px-4 py-2 rounded-lg inline-block mb-4">
+                        <h3 class="font-semibold text-lg">Tuesday</h3>
+                    </div>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <h4 class="font-semibold text-amber-700 mb-3 text-lg">Breakfast</h4>
+                            <p class="text-gray-700 leading-relaxed"><strong>Noodles</strong>, Diced chicken, All Coloured Bell Pepper, Pickle, Tasty Broccoli, Omelet Egg, Fresh Orange Juice</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-amber-700 mb-3 text-lg">Dinner</h4>
+                            <p class="text-gray-700 leading-relaxed">Delta Coconut Rice, Read Sweat Stew, Well Fried Catfish, Assorted, Plantain</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Wednesday & Thursday - Rest Days -->
+                <div class="rest-day rounded-lg p-6 text-center">
+                    <h3 class="font-playfair text-xl font-semibold text-gray-600 mb-2">🌟 Wednesday & Thursday</h3>
+                    <p class="text-gray-500 text-lg">Days off - Freestyle at home</p>
+                </div>
+            </div>
+
+            <!-- Week 5 Timing -->
+            <div class="text-center mt-8">
+                <div class="time-badge text-white px-6 py-3 rounded-full inline-block">
+                    <span class="text-lg">⏰ Breakfast 6AM • Brunch 12PM • Dinner 7PM</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Week 6 -->
+        <section class="mb-16">
+            <div class="week-header text-white text-center py-6 rounded-t-lg mb-8">
+                <h2 class="font-playfair text-3xl font-bold">WEEK 6 – MEAL PLAN</h2>
+            </div>
+            
+            <div class="space-y-6">
+                <!-- Friday -->
+                <div class="meal-card bg-white rounded-lg p-6 shadow-md">
+                    <div class="day-label text-white px-4 py-2 rounded-lg inline-block mb-4">
+                        <h3 class="font-semibold text-lg">Friday</h3>
+                    </div>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <h4 class="font-semibold text-amber-700 mb-3 text-lg">Breakfast</h4>
+                            <p class="text-gray-700 leading-relaxed">Boiled Yam, Sweet Potatoes, Ripe Plantain, Vegetable Sauce, Smoked Titus Fish, Orange Juice</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-amber-700 mb-3 text-lg">Dinner</h4>
+                            <p class="text-gray-700 leading-relaxed">Avocado Prawn Salad, Sauce Prawn, Diced Chicken, Avocado, Boiled Egg, broccoli, cauliflower, Raisins, Tangerine, All Bell Pepper, Lettuce + Pickle, Mix Mayo Sauce, Orange Juice</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Saturday -->
+                <div class="meal-card bg-white rounded-lg p-6 shadow-md">
+                    <div class="day-label text-white px-4 py-2 rounded-lg inline-block mb-4">
+                        <h3 class="font-semibold text-lg">Saturday</h3>
+                    </div>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <h4 class="font-semibold text-amber-700 mb-3 text-lg">Breakfast</h4>
+                            <p class="text-gray-700 leading-relaxed"><strong>Chinese Beef and Broccoli sauce</strong>, Boiled Basmati rice, Pineapple Juice</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-amber-700 mb-3 text-lg">Dinner</h4>
+                            <p class="text-gray-700 leading-relaxed">Owo soup, Snail, Tiko (Dried Beef), Lady Dried Fish, Dried catfish, Prawn, Perewinkle, Native potash, Starch</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sunday -->
+                <div class="meal-card bg-white rounded-lg p-6 shadow-md">
+                    <div class="day-label text-white px-4 py-2 rounded-lg inline-block mb-4">
+                        <h3 class="font-semibold text-lg">Sunday</h3>
+                    </div>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <h4 class="font-semibold text-amber-700 mb-3 text-lg">Breakfast</h4>
+                            <p class="text-gray-700 leading-relaxed"><strong>Fried Croaker or Fried Red Snapper</strong>, French Fries, Coleslaw, Pepper sauce and Ketchup, Orange Juice</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-amber-700 mb-3 text-lg">Dinner</h4>
+                            <p class="text-gray-700 leading-relaxed">Brown Rice, Sweet Red Stew, Well Fried Red Snapper, Well Fried Catfish, Banana or plantain, Maltina</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Monday -->
+                <div class="meal-card bg-white rounded-lg p-6 shadow-md">
+                    <div class="day-label text-white px-4 py-2 rounded-lg inline-block mb-4">
+                        <h3 class="font-semibold text-lg">Monday</h3>
+                    </div>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <h4 class="font-semibold text-amber-700 mb-3 text-lg">Breakfast</h4>
+                            <p class="text-gray-700 leading-relaxed">Chicken & beef Shawarma/Tacos, Avocado paste, Orange and Pineapple Juice</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-amber-700 mb-3 text-lg">Dinner</h4>
+                            <p class="text-gray-700 leading-relaxed">Delta Egusi Pepper Soup, Pork Beef, Beef, Fresh Catfish, Eba</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tuesday -->
+                <div class="meal-card bg-white rounded-lg p-6 shadow-md">
+                    <div class="day-label text-white px-4 py-2 rounded-lg inline-block mb-4">
+                        <h3 class="font-semibold text-lg">Tuesday</h3>
+                    </div>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <h4 class="font-semibold text-amber-700 mb-3 text-lg">Breakfast</h4>
+                            <p class="text-gray-700 leading-relaxed">Spaghetti Bolognese, 1 cup of cold Almond Milk</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-amber-700 mb-3 text-lg">Dinner</h4>
+                            <p class="text-gray-700 leading-relaxed">Village Concoction Rice, Fish, Well fried Beef, Banana, Coke or Fanta</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Wednesday & Thursday - Rest Days -->
+                <div class="rest-day rounded-lg p-6 text-center">
+                    <h3 class="font-playfair text-xl font-semibold text-gray-600 mb-2">🌟 Wednesday & Thursday</h3>
+                    <p class="text-gray-500 text-lg">Days off - Freestyle at home</p>
+                </div>
+            </div>
+
+            <!-- Week 6 Timing -->
+            <div class="text-center mt-8">
+                <div class="time-badge text-white px-6 py-3 rounded-full inline-block">
+                    <span class="text-lg">⏰ Breakfast 6AM • Brunch 12PM • Dinner 7PM</span>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8 mt-16">
+        <div class="max-w-4xl mx-auto px-6 text-center">
+            <p class="font-playfair text-lg mb-2">Weekly Meal Planner</p>
+            <p class="text-gray-400 text-sm">Organized home cooking made simple</p>
+        </div>
+    </footer>
+
+    <script>
+        // Set Week 1 Friday as August 8, 2025
+        const WEEK_1_FRIDAY = new Date('2025-08-08'); // Friday of Week 1
+        
+        function getCurrentWeekAndDay() {
+            const today = new Date();
+            const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+            const currentDayName = dayNames[today.getDay()];
+            
+            // Calculate which week we're in with cycling
+            const timeDiff = today.getTime() - WEEK_1_FRIDAY.getTime();
+            const daysDiff = Math.floor(timeDiff / (1000 * 3600 * 24));
+            const weekNumber = Math.floor(daysDiff / 7) + 1;
+            
+            // Cycle through weeks 1-6 continuously
+            const currentWeek = ((weekNumber - 1) % 6) + 1;
+            
+            return {
+                week: currentWeek,
+                day: currentDayName,
+                date: today.getDate(),
+                month: today.toLocaleDateString('en-US', { month: 'long' })
+            };
+        }
+        
+        function addDateLabelsAndStatus() {
+            const current = getCurrentWeekAndDay();
+            const today = new Date();
+            
+            // Get all meal cards
+            const mealCards = document.querySelectorAll('.meal-card');
+            const restDays = document.querySelectorAll('.rest-day');
+            
+            // Day order for processing
+            const dayOrder = ['Friday', 'Saturday', 'Sunday', 'Monday', 'Tuesday'];
+            
+            // Process each week
+            for (let week = 1; week <= 6; week++) { // Week 1, 2, 3, 4, 5, and 6
+                const weekSection = document.querySelector(`section:nth-of-type(${week})`);
+                if (!weekSection) continue;
+                
+                const weekCards = weekSection.querySelectorAll('.meal-card');
+                const weekRestDay = weekSection.querySelector('.rest-day');
+                
+                weekCards.forEach((card, dayIndex) => {
+                    const dayLabel = card.querySelector('.day-label h3');
+                    if (!dayLabel) return;
+                    
+                    const dayName = dayLabel.textContent.trim();
+                    
+                    // Calculate the actual date for this day
+                    const weekStartFriday = new Date(WEEK_1_FRIDAY);
+                    weekStartFriday.setDate(WEEK_1_FRIDAY.getDate() + (week - 1) * 7);
+                    
+                    // Find the date for this specific day
+                    const dayDate = new Date(weekStartFriday);
+                    const dayIndexInWeek = dayOrder.indexOf(dayName);
+                    if (dayIndexInWeek !== -1) {
+                        // Add days from Friday: Fri=0, Sat=1, Sun=2, Mon=3, Tue=4
+                        dayDate.setDate(weekStartFriday.getDate() + dayIndexInWeek);
+                    }
+                    
+                    // Add date to day label
+                    const dateStr = `${dayName} (${dayDate.getDate()} ${dayDate.toLocaleDateString('en-US', { month: 'short' })})`;
+                    dayLabel.textContent = dateStr;
+                    
+                    // Determine status
+                    const isToday = dayDate.toDateString() === today.toDateString();
+                    const isPast = dayDate < today && !isToday;
+                    const isUpcoming = dayDate > today;
+                    
+                    // Add status styling
+                    card.classList.remove('current-day', 'past-day', 'upcoming-day');
+                    dayLabel.parentElement.classList.remove('current', 'past', 'upcoming');
+                    
+                    if (isToday) {
+                        card.classList.add('current-day');
+                        dayLabel.parentElement.classList.add('current');
+                        
+                        // Add status badge
+                        let statusBadge = card.querySelector('.status-badge');
+                        if (!statusBadge) {
+                            statusBadge = document.createElement('div');
+                            statusBadge.className = 'status-badge';
+                            card.appendChild(statusBadge);
+                        }
+                        statusBadge.innerHTML = '<span class="bg-red-500 text-white px-3 py-1 rounded-full text-sm font-semibold">📍 TODAY</span>';
+                        
+                        // Scroll to current day
+                        setTimeout(() => {
+                            card.scrollIntoView({ 
+                                behavior: 'smooth', 
+                                block: 'center' 
+                            });
+                        }, 500);
+                        
+                    } else if (isPast) {
+                        card.classList.add('past-day');
+                        dayLabel.parentElement.classList.add('past');
+                        
+                        let statusBadge = card.querySelector('.status-badge');
+                        if (!statusBadge) {
+                            statusBadge = document.createElement('div');
+                            statusBadge.className = 'status-badge';
+                            card.appendChild(statusBadge);
+                        }
+                        statusBadge.innerHTML = '<span class="bg-green-500 text-white px-3 py-1 rounded-full text-sm font-semibold">✅ DONE</span>';
+                        
+                    } else if (isUpcoming) {
+                        card.classList.add('upcoming-day');
+                        dayLabel.parentElement.classList.add('upcoming');
+                        
+                        let statusBadge = card.querySelector('.status-badge');
+                        if (!statusBadge) {
+                            statusBadge = document.createElement('div');
+                            statusBadge.className = 'status-badge';
+                            card.appendChild(statusBadge);
+                        }
+                        statusBadge.innerHTML = '<span class="bg-blue-500 text-white px-3 py-1 rounded-full text-sm font-semibold">⏳ UPCOMING</span>';
+                    }
+                });
+                
+                // Handle rest days (Wednesday & Thursday)
+                if (weekRestDay) {
+                    const weekStartFriday = new Date(WEEK_1_FRIDAY);
+                    weekStartFriday.setDate(WEEK_1_FRIDAY.getDate() + (week - 1) * 7);
+                    
+                    const wednesday = new Date(weekStartFriday);
+                    wednesday.setDate(weekStartFriday.getDate() + 5); // Wednesday (Fri+5)
+                    
+                    const thursday = new Date(weekStartFriday);
+                    thursday.setDate(weekStartFriday.getDate() + 6); // Thursday (Fri+6)
+                    
+                    const wedStr = `${wednesday.getDate()} ${wednesday.toLocaleDateString('en-US', { month: 'short' })}`;
+                    const thuStr = `${thursday.getDate()} ${thursday.toLocaleDateString('en-US', { month: 'short' })}`;
+                    
+                    const restTitle = weekRestDay.querySelector('h3');
+                    if (restTitle) {
+                        restTitle.innerHTML = `🌟 Wednesday (${wedStr}) & Thursday (${thuStr})`;
+                    }
+                }
+            }
+        }
+        
+        // Run when page loads
+        document.addEventListener('DOMContentLoaded', addDateLabelsAndStatus);
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'971bfa4eb7ba9293',t:'MTc1NTYzMDkwNi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
