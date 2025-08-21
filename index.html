@@ -102,17 +102,11 @@
         
         .choice-btn {
             background: linear-gradient(135deg, #f59e0b, #d97706);
-            transition: all 0.2s ease;
-            cursor: pointer;
+            transition: opacity 0.2s ease;
         }
         
         .choice-btn:hover {
             opacity: 0.9;
-            transform: translateY(-1px);
-        }
-        
-        .choice-btn:active {
-            transform: scale(0.95);
         }
         
         @keyframes pulse {
@@ -183,29 +177,6 @@
         
         .meal-card:hover .meal-name::before {
             left: 100%;
-        }
-
-        .week-btn {
-            cursor: pointer;
-            user-select: none;
-            transition: all 0.2s ease;
-            border: 2px solid transparent;
-        }
-
-        .week-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(0,0,0,0.3);
-            border-color: #ffffff;
-        }
-
-        .week-btn:active {
-            transform: scale(0.95);
-        }
-
-        .week-btn.active {
-            background: linear-gradient(135deg, #f59e0b, #d97706) !important;
-            color: white !important;
-            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
         }
     </style>
 </head>
@@ -279,26 +250,30 @@
             <p class="text-xs text-gray-500 mt-1">Week dates: <span id="week-date-range"></span></p>
         </div>
         
-        <!-- Week Navigation - SUPER SIMPLE BUTTONS -->
+        <!-- Week Navigation -->
         <div class="mt-6 flex justify-center gap-4 flex-wrap">
-            <div class="week-btn px-6 py-3 bg-gray-300 text-gray-700 rounded-lg font-bold text-lg" onclick="showWeek(1)">Week 1</div>
-            <div class="week-btn px-6 py-3 bg-amber-500 text-white rounded-lg font-bold text-lg active" onclick="showWeek(2)">Week 2</div>
-            <div class="week-btn px-6 py-3 bg-gray-300 text-gray-700 rounded-lg font-bold text-lg" onclick="showWeek(3)">Week 3</div>
-            <div class="week-btn px-6 py-3 bg-gray-300 text-gray-700 rounded-lg font-bold text-lg" onclick="showWeek(4)">Week 4</div>
-            <div class="week-btn px-6 py-3 bg-gray-300 text-gray-700 rounded-lg font-bold text-lg" onclick="showWeek(5)">Week 5</div>
-            <div class="week-btn px-6 py-3 bg-gray-300 text-gray-700 rounded-lg font-bold text-lg" onclick="showWeek(6)">Week 6</div>
+            <button class="week-btn px-4 py-2 bg-amber-500 text-white rounded-lg hover:bg-amber-600 transition-colors" data-week="1">Week 1</button>
+            <button class="week-btn px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 transition-colors" data-week="2">Week 2</button>
+            <button class="week-btn px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 transition-colors" data-week="3">Week 3</button>
+            <button class="week-btn px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 transition-colors" data-week="4">Week 4</button>
+            <button class="week-btn px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 transition-colors" data-week="5">Week 5</button>
+            <button class="week-btn px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 transition-colors" data-week="6">Week 6</button>
         </div>
     </header>
 
     <div class="max-w-7xl mx-auto px-6 py-12 relative z-10">
         <!-- Week 1 Content -->
-        <div class="week-content" id="week-1" style="display: none;">
+        <div class="week-content" id="week-1">
             <section class="mb-16">
                 <div class="week-header text-white text-center py-6 rounded-t-lg mb-8">
                     <h2 class="font-playfair text-3xl font-bold">WEEK 1 – MEAL PLAN</h2>
                 </div>
                 
                 <div class="space-y-8 relative">
+                    <!-- Decorative floating elements -->
+                    <div class="absolute -top-4 -right-4 text-4xl opacity-20 animate-spin" style="animation-duration: 20s;">⭐</div>
+                    <div class="absolute top-1/4 -left-6 text-3xl opacity-15 animate-bounce" style="animation-delay: 1s;">🌟</div>
+                    <div class="absolute bottom-1/4 -right-8 text-5xl opacity-10 animate-pulse" style="animation-delay: 2s;">✨</div>
                     <!-- Friday -->
                     <div class="meal-card bg-white rounded-lg p-6 shadow-md" data-day="friday">
                         <div class="day-label text-white px-4 py-2 rounded-lg inline-block mb-4">
@@ -353,44 +328,130 @@
                         </div>
                     </div>
 
-                    <!-- Rest of Week 1 meals... -->
+                    <!-- Sunday -->
+                    <div class="meal-card bg-white rounded-lg p-6 shadow-md" data-day="sunday">
+                        <div class="day-label text-white px-4 py-2 rounded-lg inline-block mb-4">
+                            <h3 class="font-semibold text-lg">Sunday <span class="date-display text-sm opacity-80"></span></h3>
+                        </div>
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <h4 class="font-semibold text-amber-700 mb-3 text-lg flex items-center gap-2">
+                                    <span class="text-2xl">🌅</span>
+                                    Breakfast
+                                    <span class="text-xl">🥞</span>
+                                </h4>
+                                <div class="meal-name">Deluxe Club Sandwich</div>
+                                <p class="text-gray-700 leading-relaxed">Club Sandwich • Pickle • Ham/Bacon • SSE (egg) • Avocado Paste • French Fries • Potato Wedges • 1 cup almond milk • Ketchup • Peper sauce</p>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-amber-700 mb-3 text-lg flex items-center gap-2">
+                                    <span class="text-2xl">🌙</span>
+                                    Dinner
+                                    <span class="text-xl">🍽️</span>
+                                </h4>
+                                <div class="meal-name">Sunday Special Rice & Chicken</div>
+                                <p class="text-gray-700 leading-relaxed">Basmati White Rice • Sweet Red Stew • Fried Live Chicken or Guinea Fowl • Well Fried Diced Beef • Well Fried Turkey • Banana • Maltina</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Monday -->
+                    <div class="meal-card bg-white rounded-lg p-6 shadow-md" data-day="monday">
+                        <div class="day-label text-white px-4 py-2 rounded-lg inline-block mb-4">
+                            <h3 class="font-semibold text-lg">Monday <span class="date-display text-sm opacity-80"></span></h3>
+                        </div>
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <h4 class="font-semibold text-amber-700 mb-3 text-lg flex items-center gap-2">
+                                    <span class="text-2xl">🌅</span>
+                                    Breakfast
+                                    <span class="text-xl">🥞</span>
+                                </h4>
+                                <div class="meal-name">Mediterranean Couscous Bowl</div>
+                                <p class="text-gray-700 leading-relaxed">Couscous • All Coloured Bell Pepper • Salmon • Avocado Slice • Red Apple Slice with Cinnamon • Fresh Juice: Pineapple, Orange</p>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-amber-700 mb-3 text-lg flex items-center gap-2">
+                                    <span class="text-2xl">🌙</span>
+                                    Dinner
+                                    <span class="text-xl">🍽️</span>
+                                </h4>
+                                <div class="meal-name">Creamy Alfredo Pasta</div>
+                                <p class="text-gray-700 leading-relaxed">Alfredo Pasta • Mushroom • Diced Chicken • Prawns • Coke/Fanta or Bottled Juice</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tuesday -->
+                    <div class="meal-card bg-white rounded-lg p-6 shadow-md" data-day="tuesday">
+                        <div class="day-label text-white px-4 py-2 rounded-lg inline-block mb-4">
+                            <h3 class="font-semibold text-lg">Tuesday <span class="date-display text-sm opacity-80"></span></h3>
+                        </div>
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <h4 class="font-semibold text-amber-700 mb-3 text-lg flex items-center gap-2">
+                                    <span class="text-2xl">🌅</span>
+                                    Breakfast
+                                    <span class="text-xl">🥞</span>
+                                </h4>
+                                <div class="meal-name">Nigerian Egg Sauce Combo</div>
+                                <p class="text-gray-700 leading-relaxed">Egg Sauce • Fried Plantain • Fried Sweet Potato • Fried Yam • Avocado Slice • Fresh Pineapple Juice</p>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-amber-700 mb-3 text-lg flex items-center gap-2">
+                                    <span class="text-2xl">🌙</span>
+                                    Dinner
+                                    <span class="text-xl">🍽️</span>
+                                </h4>
+                                <div class="meal-name">Classic Jollof Rice Feast</div>
+                                <p class="text-gray-700 leading-relaxed"><strong>Jollof Rice</strong> • Beans • Black Roasted chicken • Well Fried Big Snail & Turkey • Plantain • Vegetable Sauce: Egu & Shoko • Coke/Fanta or Bottled Juice</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Wednesday & Thursday - Friendly Rest Days -->
                     <div class="rest-day p-8 text-center">
                         <div class="mb-6">
                             <span class="text-6xl mb-4 block">🌟</span>
                             <h3 class="font-playfair text-3xl font-bold mb-4">Your Free Choice Days!</h3>
-                            <p class="text-xl mb-4">Wednesday & Thursday</p>
+                            <p class="text-xl mb-4">Wednesday <span class="free-choice-wed text-amber-700 font-semibold"></span> & Thursday <span class="free-choice-thu text-amber-700 font-semibold"></span></p>
                             <p class="text-lg mb-6">Your days to relax and enjoy whatever you're craving! 😊</p>
                         </div>
                         
                         <div class="grid md:grid-cols-3 gap-4 mb-6">
-                            <div class="choice-btn text-white p-4 rounded-lg" onclick="choiceClick(this)">
+                            <div class="choice-btn text-white p-4 rounded-lg cursor-pointer">
                                 <span class="text-2xl block mb-2">🍕</span>
                                 <p class="font-semibold">Order Your Favorite Takeout</p>
                             </div>
-                            <div class="choice-btn text-white p-4 rounded-lg" onclick="choiceClick(this)">
+                            <div class="choice-btn text-white p-4 rounded-lg cursor-pointer">
                                 <span class="text-2xl block mb-2">🍳</span>
                                 <p class="font-semibold">Cook Something Fun</p>
                             </div>
-                            <div class="choice-btn text-white p-4 rounded-lg" onclick="choiceClick(this)">
+                            <div class="choice-btn text-white p-4 rounded-lg cursor-pointer">
                                 <span class="text-2xl block mb-2">🥗</span>
                                 <p class="font-semibold">Try Something New</p>
                             </div>
                         </div>
                         
                         <p class="text-lg font-medium">Remember: Balance is key, but life is meant to be enjoyed! 💫</p>
+                        <p class="text-sm mt-2 opacity-80">Listen to your body and treat yourself with kindness 🤗</p>
                     </div>
                 </div>
             </section>
         </div>
 
         <!-- Week 2 Content -->
-        <div class="week-content" id="week-2" style="display: block;">
+        <div class="week-content hidden" id="week-2">
             <section class="mb-16">
                 <div class="week-header text-white text-center py-6 rounded-t-lg mb-8">
                     <h2 class="font-playfair text-3xl font-bold">WEEK 2 – MEAL PLAN</h2>
                 </div>
                 
                 <div class="space-y-8 relative">
+                    <!-- Decorative floating elements -->
+                    <div class="absolute -top-4 -right-4 text-4xl opacity-20 animate-spin" style="animation-duration: 20s;">⭐</div>
+                    <div class="absolute top-1/4 -left-6 text-3xl opacity-15 animate-bounce" style="animation-delay: 1s;">🌟</div>
+                    <div class="absolute bottom-1/4 -right-8 text-5xl opacity-10 animate-pulse" style="animation-delay: 2s;">✨</div>
                     <!-- Friday -->
                     <div class="meal-card bg-white rounded-lg p-6 shadow-md" data-day="friday">
                         <div class="day-label text-white px-4 py-2 rounded-lg inline-block mb-4">
@@ -445,175 +506,1169 @@
                         </div>
                     </div>
 
-                    <!-- Rest of Week 2 meals... -->
+                    <!-- Sunday -->
+                    <div class="meal-card bg-white rounded-lg p-6 shadow-md" data-day="sunday">
+                        <div class="day-label text-white px-4 py-2 rounded-lg inline-block mb-4">
+                            <h3 class="font-semibold text-lg">Sunday <span class="date-display text-sm opacity-80"></span></h3>
+                        </div>
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <h4 class="font-semibold text-amber-700 mb-3 text-lg flex items-center gap-2">
+                                    <span class="text-2xl">🌅</span>
+                                    Breakfast
+                                    <span class="text-xl">🥞</span>
+                                </h4>
+                                <div class="meal-name">Gourmet Burger Experience</div>
+                                <p class="text-gray-700 leading-relaxed">Burger • Lettuce • Cheese • Pickle • Chicken or Beef • Mayo Mix Sauce • Fries • 1 cup of Almond Milk • Ham/Bacon • ketchup+peper sauce</p>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-amber-700 mb-3 text-lg flex items-center gap-2">
+                                    <span class="text-2xl">🌙</span>
+                                    Dinner
+                                    <span class="text-xl">🍽️</span>
+                                </h4>
+                                <div class="meal-name">Sunday Rice & Assorted</div>
+                                <p class="text-gray-700 leading-relaxed">Normal White Rice • Sweet Red Stew • All Assorted • Kpomo • Fried Plantain • Maltina</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Monday -->
+                    <div class="meal-card bg-white rounded-lg p-6 shadow-md" data-day="monday">
+                        <div class="day-label text-white px-4 py-2 rounded-lg inline-block mb-4">
+                            <h3 class="font-semibold text-lg">Monday <span class="date-display text-sm opacity-80"></span></h3>
+                        </div>
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <h4 class="font-semibold text-amber-700 mb-3 text-lg flex items-center gap-2">
+                                    <span class="text-2xl">🌅</span>
+                                    Breakfast
+                                    <span class="text-xl">🥞</span>
+                                </h4>
+                                <div class="meal-name">Crispy Hashbrown Breakfast</div>
+                                <p class="text-gray-700 leading-relaxed">Hashbrown • SSE (egg) • Beacon • Sausages • Avocado Paste • Whip Cream • Ketchup • peper sauce • Orange Juice</p>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-amber-700 mb-3 text-lg flex items-center gap-2">
+                                    <span class="text-2xl">🌙</span>
+                                    Dinner
+                                    <span class="text-xl">🍽️</span>
+                                </h4>
+                                <div class="meal-name">Hearty Beans Porridge</div>
+                                <p class="text-gray-700 leading-relaxed">Porridge • Beans • Yam • Sweet Potatoes • Ripe Plantain • Diced Beef • Coke/Fanta</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tuesday -->
+                    <div class="meal-card bg-white rounded-lg p-6 shadow-md" data-day="tuesday">
+                        <div class="day-label text-white px-4 py-2 rounded-lg inline-block mb-4">
+                            <h3 class="font-semibold text-lg">Tuesday <span class="date-display text-sm opacity-80"></span></h3>
+                        </div>
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <h4 class="font-semibold text-amber-700 mb-3 text-lg flex items-center gap-2">
+                                    <span class="text-2xl">🌅</span>
+                                    Breakfast
+                                    <span class="text-xl">🥞</span>
+                                </h4>
+                                <div class="meal-name">Colorful Noodles Bowl</div>
+                                <p class="text-gray-700 leading-relaxed"><strong>Noodles</strong> • Diced chicken • All Coloured Bell Pepper • Pickle • Tasty Broccoli • Omelet Egg • Fresh Orange Juice</p>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-amber-700 mb-3 text-lg flex items-center gap-2">
+                                    <span class="text-2xl">🌙</span>
+                                    Dinner
+                                    <span class="text-xl">🍽️</span>
+                                </h4>
+                                <div class="meal-name">Chinese Fried Rice Special</div>
+                                <p class="text-gray-700 leading-relaxed">Chinese Fried Rice • Eggs in rice • Steak/Salmon/Lamb chops • Orange Juice</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Wednesday & Thursday - Friendly Rest Days -->
                     <div class="rest-day p-8 text-center">
                         <div class="mb-6">
                             <span class="text-6xl mb-4 block">🌟</span>
                             <h3 class="font-playfair text-3xl font-bold mb-4">Your Free Choice Days!</h3>
-                            <p class="text-xl mb-4">Wednesday & Thursday</p>
+                            <p class="text-xl mb-4">Wednesday <span class="free-choice-wed text-amber-700 font-semibold"></span> & Thursday <span class="free-choice-thu text-amber-700 font-semibold"></span></p>
                             <p class="text-lg mb-6">Your days to relax and enjoy whatever you're craving! 😊</p>
                         </div>
                         
                         <div class="grid md:grid-cols-3 gap-4 mb-6">
-                            <div class="choice-btn text-white p-4 rounded-lg" onclick="choiceClick(this)">
+                            <div class="choice-btn text-white p-4 rounded-lg cursor-pointer">
                                 <span class="text-2xl block mb-2">🍕</span>
                                 <p class="font-semibold">Order Your Favorite Takeout</p>
                             </div>
-                            <div class="choice-btn text-white p-4 rounded-lg" onclick="choiceClick(this)">
+                            <div class="choice-btn text-white p-4 rounded-lg cursor-pointer">
                                 <span class="text-2xl block mb-2">🍳</span>
                                 <p class="font-semibold">Cook Something Fun</p>
                             </div>
-                            <div class="choice-btn text-white p-4 rounded-lg" onclick="choiceClick(this)">
+                            <div class="choice-btn text-white p-4 rounded-lg cursor-pointer">
                                 <span class="text-2xl block mb-2">🥗</span>
                                 <p class="font-semibold">Try Something New</p>
                             </div>
                         </div>
                         
                         <p class="text-lg font-medium">Remember: Balance is key, but life is meant to be enjoyed! 💫</p>
+                        <p class="text-sm mt-2 opacity-80">Listen to your body and treat yourself with kindness 🤗</p>
                     </div>
                 </div>
             </section>
         </div>
 
-        <!-- Week 3-6 Content (simplified for space) -->
-        <div class="week-content" id="week-3" style="display: none;">
+        <!-- Week 3 Content -->
+        <div class="week-content hidden" id="week-3">
             <section class="mb-16">
                 <div class="week-header text-white text-center py-6 rounded-t-lg mb-8">
                     <h2 class="font-playfair text-3xl font-bold">WEEK 3 – MEAL PLAN</h2>
                 </div>
-                <div class="text-center p-8 bg-white rounded-lg">
-                    <h3 class="text-2xl font-bold text-amber-700 mb-4">Week 3 Meals Coming Soon!</h3>
-                    <p class="text-gray-600">This week's detailed meal plan will be displayed here.</p>
+                
+                <div class="space-y-8 relative">
+                    <!-- Decorative floating elements -->
+                    <div class="absolute -top-4 -right-4 text-4xl opacity-20 animate-spin" style="animation-duration: 20s;">⭐</div>
+                    <div class="absolute top-1/4 -left-6 text-3xl opacity-15 animate-bounce" style="animation-delay: 1s;">🌟</div>
+                    <div class="absolute bottom-1/4 -right-8 text-5xl opacity-10 animate-pulse" style="animation-delay: 2s;">✨</div>
+                    <!-- Friday -->
+                    <div class="meal-card bg-white rounded-lg p-6 shadow-md" data-day="friday">
+                        <div class="day-label text-white px-4 py-2 rounded-lg inline-block mb-4">
+                            <h3 class="font-semibold text-lg">Friday <span class="date-display text-sm opacity-80"></span></h3>
+                        </div>
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <h4 class="font-semibold text-amber-700 mb-3 text-lg flex items-center gap-2">
+                                    <span class="text-2xl">🌅</span>
+                                    Breakfast
+                                    <span class="text-xl">🥞</span>
+                                </h4>
+                                <div class="meal-name">Boiled Tubers & Veggie Sauce</div>
+                                <p class="text-gray-700 leading-relaxed">Boiled Yam, Sweet Potatoes, Ripe Plantain • Vegetable Sauce • Smoked Titus Fish • Orange Juice</p>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-amber-700 mb-3 text-lg flex items-center gap-2">
+                                    <span class="text-2xl">🌙</span>
+                                    Dinner
+                                    <span class="text-xl">🍽️</span>
+                                </h4>
+                                <div class="meal-name">Caesar Salad with Rotini</div>
+                                <p class="text-gray-700 leading-relaxed">Caesar Salad with Rotini Pasta • Diced chicken • Diced bread • Lettuce • Cucumber • Cherry tomatoes • Parmesan Cheese • Parsley • Pickle • Raisins • Orange juice</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Saturday -->
+                    <div class="meal-card bg-white rounded-lg p-6 shadow-md" data-day="saturday">
+                        <div class="day-label text-white px-4 py-2 rounded-lg inline-block mb-4">
+                            <h3 class="font-semibold text-lg">Saturday <span class="date-display text-sm opacity-80"></span></h3>
+                        </div>
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <h4 class="font-semibold text-amber-700 mb-3 text-lg flex items-center gap-2">
+                                    <span class="text-2xl">🌅</span>
+                                    Breakfast
+                                    <span class="text-xl">🥞</span>
+                                </h4>
+                                <div class="meal-name">Chinese Beef & Broccoli</div>
+                                <p class="text-gray-700 leading-relaxed"><strong>Chinese Beef and Broccoli sauce</strong> • Boiled Basmati rice • Pineapple Juice</p>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-amber-700 mb-3 text-lg flex items-center gap-2">
+                                    <span class="text-2xl">🌙</span>
+                                    Dinner
+                                    <span class="text-xl">🍽️</span>
+                                </h4>
+                                <div class="meal-name">Ukodo Pepper Soup</div>
+                                <p class="text-gray-700 leading-relaxed">Ukodo: Yam and Unripe Plantain Pepper Soup • Live Chicken • Goat Meat • Fruits slice as sides</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sunday -->
+                    <div class="meal-card bg-white rounded-lg p-6 shadow-md" data-day="sunday">
+                        <div class="day-label text-white px-4 py-2 rounded-lg inline-block mb-4">
+                            <h3 class="font-semibold text-lg">Sunday <span class="date-display text-sm opacity-80"></span></h3>
+                        </div>
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <h4 class="font-semibold text-amber-700 mb-3 text-lg flex items-center gap-2">
+                                    <span class="text-2xl">🌅</span>
+                                    Breakfast
+                                    <span class="text-xl">🥞</span>
+                                </h4>
+                                <div class="meal-name">Fried Fish & Fries</div>
+                                <p class="text-gray-700 leading-relaxed"><strong>Fried Croaker or Fried Red Snapper</strong> • French Fries • Coleslaw • Pepper sauce and Ketchup • Orange Juice</p>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-amber-700 mb-3 text-lg flex items-center gap-2">
+                                    <span class="text-2xl">🌙</span>
+                                    Dinner
+                                    <span class="text-xl">🍽️</span>
+                                </h4>
+                                <div class="meal-name">Brown Rice & Fish Special</div>
+                                <p class="text-gray-700 leading-relaxed">Brown Rice • Sweet Red Stew • Well Fried Red Snapper • Well Fried Catfish • Banana or plantain • Maltina</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Monday -->
+                    <div class="meal-card bg-white rounded-lg p-6 shadow-md" data-day="monday">
+                        <div class="day-label text-white px-4 py-2 rounded-lg inline-block mb-4">
+                            <h3 class="font-semibold text-lg">Monday <span class="date-display text-sm opacity-80"></span></h3>
+                        </div>
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <h4 class="font-semibold text-amber-700 mb-3 text-lg flex items-center gap-2">
+                                    <span class="text-2xl">🌅</span>
+                                    Breakfast
+                                    <span class="text-xl">🥞</span>
+                                </h4>
+                                <div class="meal-name">Chicken & Beef Shawarma</div>
+                                <p class="text-gray-700 leading-relaxed">Chicken & beef Shawarma/Tacos • Avocado paste • Orange and Pineapple Juice</p>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-amber-700 mb-3 text-lg flex items-center gap-2">
+                                    <span class="text-2xl">🌙</span>
+                                    Dinner
+                                    <span class="text-xl">🍽️</span>
+                                </h4>
+                                <div class="meal-name">Rich Egusi Soup</div>
+                                <p class="text-gray-700 leading-relaxed">Egusi Soup • egu vegi • shoko vegi • Goat Meat • live cook Chicken • smoked titus • Well fried beef • Perewinkle</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tuesday -->
+                    <div class="meal-card bg-white rounded-lg p-6 shadow-md" data-day="tuesday">
+                        <div class="day-label text-white px-4 py-2 rounded-lg inline-block mb-4">
+                            <h3 class="font-semibold text-lg">Tuesday <span class="date-display text-sm opacity-80"></span></h3>
+                        </div>
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <h4 class="font-semibold text-amber-700 mb-3 text-lg flex items-center gap-2">
+                                    <span class="text-2xl">🌅</span>
+                                    Breakfast
+                                    <span class="text-xl">🥞</span>
+                                </h4>
+                                <div class="meal-name">Classic Spaghetti Bolognese</div>
+                                <p class="text-gray-700 leading-relaxed">Spaghetti Bolognese • 1 cup of cold Almond Milk</p>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-amber-700 mb-3 text-lg flex items-center gap-2">
+                                    <span class="text-2xl">🌙</span>
+                                    Dinner
+                                    <span class="text-xl">🍽️</span>
+                                </h4>
+                                <div class="meal-name">Ofada Rice & Sauce</div>
+                                <p class="text-gray-700 leading-relaxed">Ofada Rice and Sauce • Assorted • Fried Plantain • Maltina</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Wednesday & Thursday - Friendly Rest Days -->
+                    <div class="rest-day p-8 text-center">
+                        <div class="mb-6">
+                            <span class="text-6xl mb-4 block">🌟</span>
+                            <h3 class="font-playfair text-3xl font-bold mb-4">Your Free Choice Days!</h3>
+                            <p class="text-xl mb-4">Wednesday <span class="free-choice-wed text-amber-700 font-semibold"></span> & Thursday <span class="free-choice-thu text-amber-700 font-semibold"></span></p>
+                            <p class="text-lg mb-6">Your days to relax and enjoy whatever you're craving! 😊</p>
+                        </div>
+                        
+                        <div class="grid md:grid-cols-3 gap-4 mb-6">
+                            <div class="choice-btn text-white p-4 rounded-lg cursor-pointer">
+                                <span class="text-2xl block mb-2">🍕</span>
+                                <p class="font-semibold">Order Your Favorite Takeout</p>
+                            </div>
+                            <div class="choice-btn text-white p-4 rounded-lg cursor-pointer">
+                                <span class="text-2xl block mb-2">🍳</span>
+                                <p class="font-semibold">Cook Something Fun</p>
+                            </div>
+                            <div class="choice-btn text-white p-4 rounded-lg cursor-pointer">
+                                <span class="text-2xl block mb-2">🥗</span>
+                                <p class="font-semibold">Try Something New</p>
+                            </div>
+                        </div>
+                        
+                        <p class="text-lg font-medium">Remember: Balance is key, but life is meant to be enjoyed! 💫</p>
+                        <p class="text-sm mt-2 opacity-80">Listen to your body and treat yourself with kindness 🤗</p>
+                    </div>
                 </div>
             </section>
         </div>
 
-        <div class="week-content" id="week-4" style="display: none;">
+        <!-- Week 4 Content -->
+        <div class="week-content hidden" id="week-4">
             <section class="mb-16">
                 <div class="week-header text-white text-center py-6 rounded-t-lg mb-8">
                     <h2 class="font-playfair text-3xl font-bold">WEEK 4 – MEAL PLAN</h2>
                 </div>
-                <div class="text-center p-8 bg-white rounded-lg">
-                    <h3 class="text-2xl font-bold text-amber-700 mb-4">Week 4 Meals Coming Soon!</h3>
-                    <p class="text-gray-600">This week's detailed meal plan will be displayed here.</p>
+                
+                <div class="space-y-8 relative">
+                    <!-- Decorative floating elements -->
+                    <div class="absolute -top-4 -right-4 text-4xl opacity-20 animate-spin" style="animation-duration: 20s;">⭐</div>
+                    <div class="absolute top-1/4 -left-6 text-3xl opacity-15 animate-bounce" style="animation-delay: 1s;">🌟</div>
+                    <div class="absolute bottom-1/4 -right-8 text-5xl opacity-10 animate-pulse" style="animation-delay: 2s;">✨</div>
+                    <!-- Friday -->
+                    <div class="meal-card bg-white rounded-lg p-6 shadow-md" data-day="friday">
+                        <div class="day-label text-white px-4 py-2 rounded-lg inline-block mb-4">
+                            <h3 class="font-semibold text-lg">Friday <span class="date-display text-sm opacity-80"></span></h3>
+                        </div>
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <h4 class="font-semibold text-amber-700 mb-3 text-lg flex items-center gap-2">
+                                    <span class="text-2xl">🌅</span>
+                                    Breakfast
+                                    <span class="text-xl">🥞</span>
+                                </h4>
+                                <div class="meal-name">American Style Pancake Breakfast</div>
+                                <p class="text-gray-700 leading-relaxed">Pancakes • Beacon • Sausages • Blueberries • Scrambled Egg • Tea (top tea) • Peak • Milk/Almond • Sugar & Honey</p>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-amber-700 mb-3 text-lg flex items-center gap-2">
+                                    <span class="text-2xl">🌙</span>
+                                    Dinner
+                                    <span class="text-xl">🍽️</span>
+                                </h4>
+                                <div class="meal-name">Efo Ri Ro Special</div>
+                                <p class="text-gray-700 leading-relaxed">Efo Ri Ro • Well fried red snapper • Shaki • kopmor • Smoked mackerel/Smoke titus • Perewinkle</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Saturday -->
+                    <div class="meal-card bg-white rounded-lg p-6 shadow-md" data-day="saturday">
+                        <div class="day-label text-white px-4 py-2 rounded-lg inline-block mb-4">
+                            <h3 class="font-semibold text-lg">Saturday <span class="date-display text-sm opacity-80"></span></h3>
+                        </div>
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <h4 class="font-semibold text-amber-700 mb-3 text-lg flex items-center gap-2">
+                                    <span class="text-2xl">🌅</span>
+                                    Breakfast
+                                    <span class="text-xl">🥞</span>
+                                </h4>
+                                <div class="meal-name">Traditional Nigerian Breakfast</div>
+                                <p class="text-gray-700 leading-relaxed">Pap • Akara • Beans • Un-Slice Bread • Milk and Sugar</p>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-amber-700 mb-3 text-lg flex items-center gap-2">
+                                    <span class="text-2xl">🌙</span>
+                                    Dinner
+                                    <span class="text-xl">🍽️</span>
+                                </h4>
+                                <div class="meal-name">Chicken Curry & Potatoes</div>
+                                <p class="text-gray-700 leading-relaxed">Chicken Curry • irish and sweet potatoes • Live Chicken • Banana • Fresh Juice: Pineapple, Orange</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sunday -->
+                    <div class="meal-card bg-white rounded-lg p-6 shadow-md" data-day="sunday">
+                        <div class="day-label text-white px-4 py-2 rounded-lg inline-block mb-4">
+                            <h3 class="font-semibold text-lg">Sunday <span class="date-display text-sm opacity-80"></span></h3>
+                        </div>
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <h4 class="font-semibold text-amber-700 mb-3 text-lg flex items-center gap-2">
+                                    <span class="text-2xl">🌅</span>
+                                    Breakfast
+                                    <span class="text-xl">🥞</span>
+                                </h4>
+                                <div class="meal-name">Deluxe Club Sandwich</div>
+                                <p class="text-gray-700 leading-relaxed">Club Sandwich • Pickle • Ham/Bacon • SSE (egg) • Avocado Paste • French Fries • Potato Wedges • 1 cup almond milk • Ketchup • Peper sauce</p>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-amber-700 mb-3 text-lg flex items-center gap-2">
+                                    <span class="text-2xl">🌙</span>
+                                    Dinner
+                                    <span class="text-xl">🍽️</span>
+                                </h4>
+                                <div class="meal-name">Sunday Special Rice & Chicken</div>
+                                <p class="text-gray-700 leading-relaxed">Basmati White Rice • Sweet Red Stew • Fried Live Chicken • Well Fried Diced Beef • Well Fried Turkey • Banana • Maltina</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Monday -->
+                    <div class="meal-card bg-white rounded-lg p-6 shadow-md" data-day="monday">
+                        <div class="day-label text-white px-4 py-2 rounded-lg inline-block mb-4">
+                            <h3 class="font-semibold text-lg">Monday <span class="date-display text-sm opacity-80"></span></h3>
+                        </div>
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <h4 class="font-semibold text-amber-700 mb-3 text-lg flex items-center gap-2">
+                                    <span class="text-2xl">🌅</span>
+                                    Breakfast
+                                    <span class="text-xl">🥞</span>
+                                </h4>
+                                <div class="meal-name">Mediterranean Couscous Bowl</div>
+                                <p class="text-gray-700 leading-relaxed">Couscous • All Coloured Bell Pepper • Salmon • Avocado Slice • Red Apple Slice with Cinnamon • Fresh Juice: Pineapple, Orange</p>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-amber-700 mb-3 text-lg flex items-center gap-2">
+                                    <span class="text-2xl">🌙</span>
+                                    Dinner
+                                    <span class="text-xl">🍽️</span>
+                                </h4>
+                                <div class="meal-name">Traditional Ogbono Soup</div>
+                                <p class="text-gray-700 leading-relaxed">Ogbono soup • Goat Meat • Beef • Smoked Horse mackerel/Smoke titus • Bonga fish • Perewinkle</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tuesday -->
+                    <div class="meal-card bg-white rounded-lg p-6 shadow-md" data-day="tuesday">
+                        <div class="day-label text-white px-4 py-2 rounded-lg inline-block mb-4">
+                            <h3 class="font-semibold text-lg">Tuesday <span class="date-display text-sm opacity-80"></span></h3>
+                        </div>
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <h4 class="font-semibold text-amber-700 mb-3 text-lg flex items-center gap-2">
+                                    <span class="text-2xl">🌅</span>
+                                    Breakfast
+                                    <span class="text-xl">🥞</span>
+                                </h4>
+                                <div class="meal-name">Nigerian Egg Sauce Combo</div>
+                                <p class="text-gray-700 leading-relaxed">Egg Sauce • Fried Plantain • Fried Sweet Potato • Fried Yam • Avocado Slice • Fresh Pineapple Juice</p>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-amber-700 mb-3 text-lg flex items-center gap-2">
+                                    <span class="text-2xl">🌙</span>
+                                    Dinner
+                                    <span class="text-xl">🍽️</span>
+                                </h4>
+                                <div class="meal-name">Fresh Catfish Pepper Soup</div>
+                                <p class="text-gray-700 leading-relaxed">Normal White rice • Fresh Catfish Pepper Soup • Fruits slice as side</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Wednesday & Thursday - Friendly Rest Days -->
+                    <div class="rest-day p-8 text-center">
+                        <div class="mb-6">
+                            <span class="text-6xl mb-4 block">🌟</span>
+                            <h3 class="font-playfair text-3xl font-bold mb-4">Your Free Choice Days!</h3>
+                            <p class="text-xl mb-4">Wednesday <span class="free-choice-wed text-amber-700 font-semibold"></span> & Thursday <span class="free-choice-thu text-amber-700 font-semibold"></span></p>
+                            <p class="text-lg mb-6">Your days to relax and enjoy whatever you're craving! 😊</p>
+                        </div>
+                        
+                        <div class="grid md:grid-cols-3 gap-4 mb-6">
+                            <div class="choice-btn text-white p-4 rounded-lg cursor-pointer">
+                                <span class="text-2xl block mb-2">🍕</span>
+                                <p class="font-semibold">Order Your Favorite Takeout</p>
+                            </div>
+                            <div class="choice-btn text-white p-4 rounded-lg cursor-pointer">
+                                <span class="text-2xl block mb-2">🍳</span>
+                                <p class="font-semibold">Cook Something Fun</p>
+                            </div>
+                            <div class="choice-btn text-white p-4 rounded-lg cursor-pointer">
+                                <span class="text-2xl block mb-2">🥗</span>
+                                <p class="font-semibold">Try Something New</p>
+                            </div>
+                        </div>
+                        
+                        <p class="text-lg font-medium">Remember: Balance is key, but life is meant to be enjoyed! 💫</p>
+                        <p class="text-sm mt-2 opacity-80">Listen to your body and treat yourself with kindness 🤗</p>
+                    </div>
                 </div>
             </section>
         </div>
 
-        <div class="week-content" id="week-5" style="display: none;">
+        <!-- Week 5 Content -->
+        <div class="week-content hidden" id="week-5">
             <section class="mb-16">
                 <div class="week-header text-white text-center py-6 rounded-t-lg mb-8">
                     <h2 class="font-playfair text-3xl font-bold">WEEK 5 – MEAL PLAN</h2>
                 </div>
-                <div class="text-center p-8 bg-white rounded-lg">
-                    <h3 class="text-2xl font-bold text-amber-700 mb-4">Week 5 Meals Coming Soon!</h3>
-                    <p class="text-gray-600">This week's detailed meal plan will be displayed here.</p>
+                
+                <div class="space-y-8 relative">
+                    <!-- Decorative floating elements -->
+                    <div class="absolute -top-4 -right-4 text-4xl opacity-20 animate-spin" style="animation-duration: 20s;">⭐</div>
+                    <div class="absolute top-1/4 -left-6 text-3xl opacity-15 animate-bounce" style="animation-delay: 1s;">🌟</div>
+                    <div class="absolute bottom-1/4 -right-8 text-5xl opacity-10 animate-pulse" style="animation-delay: 2s;">✨</div>
+                    <!-- Friday -->
+                    <div class="meal-card bg-white rounded-lg p-6 shadow-md" data-day="friday">
+                        <div class="day-label text-white px-4 py-2 rounded-lg inline-block mb-4">
+                            <h3 class="font-semibold text-lg">Friday <span class="date-display text-sm opacity-80"></span></h3>
+                        </div>
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <h4 class="font-semibold text-amber-700 mb-3 text-lg flex items-center gap-2">
+                                    <span class="text-2xl">🌅</span>
+                                    Breakfast
+                                    <span class="text-xl">🥞</span>
+                                </h4>
+                                <div class="meal-name">Protein-Rich Lentil Bowl</div>
+                                <p class="text-gray-700 leading-relaxed">Mix lentil • Chicken Cream Sauce • Pineapple Juice</p>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-amber-700 mb-3 text-lg flex items-center gap-2">
+                                    <span class="text-2xl">🌙</span>
+                                    Dinner
+                                    <span class="text-xl">🍽️</span>
+                                </h4>
+                                <div class="meal-name">Authentic Oha Soup</div>
+                                <p class="text-gray-700 leading-relaxed">Oha soup – Real Cocoyam • Goat meat • Pork Beef • Smoked Titus Fish • Eba</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Saturday -->
+                    <div class="meal-card bg-white rounded-lg p-6 shadow-md" data-day="saturday">
+                        <div class="day-label text-white px-4 py-2 rounded-lg inline-block mb-4">
+                            <h3 class="font-semibold text-lg">Saturday <span class="date-display text-sm opacity-80"></span></h3>
+                        </div>
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <h4 class="font-semibold text-amber-700 mb-3 text-lg flex items-center gap-2">
+                                    <span class="text-2xl">🌅</span>
+                                    Breakfast
+                                    <span class="text-xl">🥞</span>
+                                </h4>
+                                <div class="meal-name">Plantain Mio Mio Delight</div>
+                                <p class="text-gray-700 leading-relaxed">Plantain Mio Mio • Diced Fried Gizzard • All Coloured Bell Pepper • Pepper Sauce • Coleslaw • Avocado • Orange Juice</p>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-amber-700 mb-3 text-lg flex items-center gap-2">
+                                    <span class="text-2xl">🌙</span>
+                                    Dinner
+                                    <span class="text-xl">🍽️</span>
+                                </h4>
+                                <div class="meal-name">Ijebu Egusi Special</div>
+                                <p class="text-gray-700 leading-relaxed">iJebu Egusi • Cowleg • Shaki • Dried Catfish • Smoked Titus fish • Perewinkle • Eba</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sunday -->
+                    <div class="meal-card bg-white rounded-lg p-6 shadow-md" data-day="sunday">
+                        <div class="day-label text-white px-4 py-2 rounded-lg inline-block mb-4">
+                            <h3 class="font-semibold text-lg">Sunday <span class="date-display text-sm opacity-80"></span></h3>
+                        </div>
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <h4 class="font-semibold text-amber-700 mb-3 text-lg flex items-center gap-2">
+                                    <span class="text-2xl">🌅</span>
+                                    Breakfast
+                                    <span class="text-xl">🥞</span>
+                                </h4>
+                                <div class="meal-name">Gourmet Burger Experience</div>
+                                <p class="text-gray-700 leading-relaxed">Burger • Lettuce • Cheese • Pickle • Chicken or Beef • Mayo Mix Sauce • Fries • 1 cup of Almond Milk • Ham/Bacon • ketchup+peper sauce</p>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-amber-700 mb-3 text-lg flex items-center gap-2">
+                                    <span class="text-2xl">🌙</span>
+                                    Dinner
+                                    <span class="text-xl">🍽️</span>
+                                </h4>
+                                <div class="meal-name">Sunday Rice & Assorted</div>
+                                <p class="text-gray-700 leading-relaxed">Normal White Rice • Sweet Red Stew • All Assorted • Kpomo • Fried Plantain • Maltina</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Monday -->
+                    <div class="meal-card bg-white rounded-lg p-6 shadow-md" data-day="monday">
+                        <div class="day-label text-white px-4 py-2 rounded-lg inline-block mb-4">
+                            <h3 class="font-semibold text-lg">Monday <span class="date-display text-sm opacity-80"></span></h3>
+                        </div>
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <h4 class="font-semibold text-amber-700 mb-3 text-lg flex items-center gap-2">
+                                    <span class="text-2xl">🌅</span>
+                                    Breakfast
+                                    <span class="text-xl">🥞</span>
+                                </h4>
+                                <div class="meal-name">Crispy Hashbrown Breakfast</div>
+                                <p class="text-gray-700 leading-relaxed">Hashbrown • SSE (egg) • Beacon • Sausages • Avocado Paste • Whip Cream • Ketchup • peper sauce • Orange Juice</p>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-amber-700 mb-3 text-lg flex items-center gap-2">
+                                    <span class="text-2xl">🌙</span>
+                                    Dinner
+                                    <span class="text-xl">🍽️</span>
+                                </h4>
+                                <div class="meal-name">Edikaikong Soup</div>
+                                <p class="text-gray-700 leading-relaxed">Edikaikong • All Assorted and Shaki • Beef • Perewinkle • Pounded Yam</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tuesday -->
+                    <div class="meal-card bg-white rounded-lg p-6 shadow-md" data-day="tuesday">
+                        <div class="day-label text-white px-4 py-2 rounded-lg inline-block mb-4">
+                            <h3 class="font-semibold text-lg">Tuesday <span class="date-display text-sm opacity-80"></span></h3>
+                        </div>
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <h4 class="font-semibold text-amber-700 mb-3 text-lg flex items-center gap-2">
+                                    <span class="text-2xl">🌅</span>
+                                    Breakfast
+                                    <span class="text-xl">🥞</span>
+                                </h4>
+                                <div class="meal-name">Colorful Noodles Bowl</div>
+                                <p class="text-gray-700 leading-relaxed"><strong>Noodles</strong> • Diced chicken • All Coloured Bell Pepper • Pickle • Tasty Broccoli • Omelet Egg • Fresh Orange Juice</p>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-amber-700 mb-3 text-lg flex items-center gap-2">
+                                    <span class="text-2xl">🌙</span>
+                                    Dinner
+                                    <span class="text-xl">🍽️</span>
+                                </h4>
+                                <div class="meal-name">Delta Coconut Rice</div>
+                                <p class="text-gray-700 leading-relaxed">Delta Coconut Rice • Read Sweat Stew • Well Fried Catfish • Assorted • Plantain</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Wednesday & Thursday - Friendly Rest Days -->
+                    <div class="rest-day p-8 text-center">
+                        <div class="mb-6">
+                            <span class="text-6xl mb-4 block">🌟</span>
+                            <h3 class="font-playfair text-3xl font-bold mb-4">Your Free Choice Days!</h3>
+                            <p class="text-xl mb-4">Wednesday <span class="free-choice-wed text-amber-700 font-semibold"></span> & Thursday <span class="free-choice-thu text-amber-700 font-semibold"></span></p>
+                            <p class="text-lg mb-6">Your days to relax and enjoy whatever you're craving! 😊</p>
+                        </div>
+                        
+                        <div class="grid md:grid-cols-3 gap-4 mb-6">
+                            <div class="choice-btn text-white p-4 rounded-lg cursor-pointer">
+                                <span class="text-2xl block mb-2">🍕</span>
+                                <p class="font-semibold">Order Your Favorite Takeout</p>
+                            </div>
+                            <div class="choice-btn text-white p-4 rounded-lg cursor-pointer">
+                                <span class="text-2xl block mb-2">🍳</span>
+                                <p class="font-semibold">Cook Something Fun</p>
+                            </div>
+                            <div class="choice-btn text-white p-4 rounded-lg cursor-pointer">
+                                <span class="text-2xl block mb-2">🥗</span>
+                                <p class="font-semibold">Try Something New</p>
+                            </div>
+                        </div>
+                        
+                        <p class="text-lg font-medium">Remember: Balance is key, but life is meant to be enjoyed! 💫</p>
+                        <p class="text-sm mt-2 opacity-80">Listen to your body and treat yourself with kindness 🤗</p>
+                    </div>
                 </div>
             </section>
         </div>
 
-        <div class="week-content" id="week-6" style="display: none;">
+        <!-- Week 6 Content -->
+        <div class="week-content hidden" id="week-6">
             <section class="mb-16">
                 <div class="week-header text-white text-center py-6 rounded-t-lg mb-8">
                     <h2 class="font-playfair text-3xl font-bold">WEEK 6 – MEAL PLAN</h2>
                 </div>
-                <div class="text-center p-8 bg-white rounded-lg">
-                    <h3 class="text-2xl font-bold text-amber-700 mb-4">Week 6 Meals Coming Soon!</h3>
-                    <p class="text-gray-600">This week's detailed meal plan will be displayed here.</p>
+                
+                <div class="space-y-8 relative">
+                    <!-- Decorative floating elements -->
+                    <div class="absolute -top-4 -right-4 text-4xl opacity-20 animate-spin" style="animation-duration: 20s;">⭐</div>
+                    <div class="absolute top-1/4 -left-6 text-3xl opacity-15 animate-bounce" style="animation-delay: 1s;">🌟</div>
+                    <div class="absolute bottom-1/4 -right-8 text-5xl opacity-10 animate-pulse" style="animation-delay: 2s;">✨</div>
+                    <!-- Friday -->
+                    <div class="meal-card bg-white rounded-lg p-6 shadow-md" data-day="friday">
+                        <div class="day-label text-white px-4 py-2 rounded-lg inline-block mb-4">
+                            <h3 class="font-semibold text-lg">Friday <span class="date-display text-sm opacity-80"></span></h3>
+                        </div>
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <h4 class="font-semibold text-amber-700 mb-3 text-lg flex items-center gap-2">
+                                    <span class="text-2xl">🌅</span>
+                                    Breakfast
+                                    <span class="text-xl">🥞</span>
+                                </h4>
+                                <div class="meal-name">Boiled Tubers & Veggie Sauce</div>
+                                <p class="text-gray-700 leading-relaxed">Boiled Yam, Sweet Potatoes, Ripe Plantain • Vegetable Sauce • Smoked Titus Fish • Orange Juice</p>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-amber-700 mb-3 text-lg flex items-center gap-2">
+                                    <span class="text-2xl">🌙</span>
+                                    Dinner
+                                    <span class="text-xl">🍽️</span>
+                                </h4>
+                                <div class="meal-name">Avocado Prawn Salad</div>
+                                <p class="text-gray-700 leading-relaxed">Avocado Prawn Salad • Sauce Prawn • Diced Chicken • Avocado • Boiled Egg • broccoli • cauliflower • Raisins • Tangerine • All Bell Pepper • Lettuce + Pickle • Mix Mayo Sauce • Orange Juice</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Saturday -->
+                    <div class="meal-card bg-white rounded-lg p-6 shadow-md" data-day="saturday">
+                        <div class="day-label text-white px-4 py-2 rounded-lg inline-block mb-4">
+                            <h3 class="font-semibold text-lg">Saturday <span class="date-display text-sm opacity-80"></span></h3>
+                        </div>
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <h4 class="font-semibold text-amber-700 mb-3 text-lg flex items-center gap-2">
+                                    <span class="text-2xl">🌅</span>
+                                    Breakfast
+                                    <span class="text-xl">🥞</span>
+                                </h4>
+                                <div class="meal-name">Chinese Beef & Broccoli</div>
+                                <p class="text-gray-700 leading-relaxed"><strong>Chinese Beef and Broccoli sauce</strong> • Boiled Basmati rice • Pineapple Juice</p>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-amber-700 mb-3 text-lg flex items-center gap-2">
+                                    <span class="text-2xl">🌙</span>
+                                    Dinner
+                                    <span class="text-xl">🍽️</span>
+                                </h4>
+                                <div class="meal-name">Traditional Owo Soup</div>
+                                <p class="text-gray-700 leading-relaxed">Owo soup • Snail • Tiko (Dried Beef) • Lady Dried Fish • Dried catfish • Prawn • Perewinkle • Native potash • Starch</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sunday -->
+                    <div class="meal-card bg-white rounded-lg p-6 shadow-md" data-day="sunday">
+                        <div class="day-label text-white px-4 py-2 rounded-lg inline-block mb-4">
+                            <h3 class="font-semibold text-lg">Sunday <span class="date-display text-sm opacity-80"></span></h3>
+                        </div>
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <h4 class="font-semibold text-amber-700 mb-3 text-lg flex items-center gap-2">
+                                    <span class="text-2xl">🌅</span>
+                                    Breakfast
+                                    <span class="text-xl">🥞</span>
+                                </h4>
+                                <div class="meal-name">Fried Fish & Fries</div>
+                                <p class="text-gray-700 leading-relaxed"><strong>Fried Croaker or Fried Red Snapper</strong> • French Fries • Coleslaw • Pepper sauce and Ketchup • Orange Juice</p>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-amber-700 mb-3 text-lg flex items-center gap-2">
+                                    <span class="text-2xl">🌙</span>
+                                    Dinner
+                                    <span class="text-xl">🍽️</span>
+                                </h4>
+                                <div class="meal-name">Brown Rice & Fish Special</div>
+                                <p class="text-gray-700 leading-relaxed">Brown Rice • Sweet Red Stew • Well Fried Red Snapper • Well Fried Catfish • Banana or plantain • Maltina</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Monday -->
+                    <div class="meal-card bg-white rounded-lg p-6 shadow-md" data-day="monday">
+                        <div class="day-label text-white px-4 py-2 rounded-lg inline-block mb-4">
+                            <h3 class="font-semibold text-lg">Monday <span class="date-display text-sm opacity-80"></span></h3>
+                        </div>
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <h4 class="font-semibold text-amber-700 mb-3 text-lg flex items-center gap-2">
+                                    <span class="text-2xl">🌅</span>
+                                    Breakfast
+                                    <span class="text-xl">🥞</span>
+                                </h4>
+                                <div class="meal-name">Chicken & Beef Shawarma</div>
+                                <p class="text-gray-700 leading-relaxed">Chicken & beef Shawarma/Tacos • Avocado paste • Orange and Pineapple Juice</p>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-amber-700 mb-3 text-lg flex items-center gap-2">
+                                    <span class="text-2xl">🌙</span>
+                                    Dinner
+                                    <span class="text-xl">🍽️</span>
+                                </h4>
+                                <div class="meal-name">Delta Egusi Pepper Soup</div>
+                                <p class="text-gray-700 leading-relaxed">Delta Egusi Pepper Soup • Pork Beef • Beef • Fresh Catfish • Eba</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tuesday -->
+                    <div class="meal-card bg-white rounded-lg p-6 shadow-md" data-day="tuesday">
+                        <div class="day-label text-white px-4 py-2 rounded-lg inline-block mb-4">
+                            <h3 class="font-semibold text-lg">Tuesday <span class="date-display text-sm opacity-80"></span></h3>
+                        </div>
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <h4 class="font-semibold text-amber-700 mb-3 text-lg flex items-center gap-2">
+                                    <span class="text-2xl">🌅</span>
+                                    Breakfast
+                                    <span class="text-xl">🥞</span>
+                                </h4>
+                                <div class="meal-name">Classic Spaghetti Bolognese</div>
+                                <p class="text-gray-700 leading-relaxed">Spaghetti Bolognese • 1 cup of cold Almond Milk</p>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-amber-700 mb-3 text-lg flex items-center gap-2">
+                                    <span class="text-2xl">🌙</span>
+                                    Dinner
+                                    <span class="text-xl">🍽️</span>
+                                </h4>
+                                <div class="meal-name">Village Concoction Rice</div>
+                                <p class="text-gray-700 leading-relaxed">Village Concoction Rice • Fish • Well fried Beef • Banana • Coke or Fanta</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Wednesday & Thursday - Friendly Rest Days -->
+                    <div class="rest-day p-8 text-center">
+                        <div class="mb-6">
+                            <span class="text-6xl mb-4 block">🌟</span>
+                            <h3 class="font-playfair text-3xl font-bold mb-4">Your Free Choice Days!</h3>
+                            <p class="text-xl mb-4">Wednesday <span class="free-choice-wed text-amber-700 font-semibold"></span> & Thursday <span class="free-choice-thu text-amber-700 font-semibold"></span></p>
+                            <p class="text-lg mb-6">Your days to relax and enjoy whatever you're craving! 😊</p>
+                        </div>
+                        
+                        <div class="grid md:grid-cols-3 gap-4 mb-6">
+                            <div class="choice-btn text-white p-4 rounded-lg cursor-pointer">
+                                <span class="text-2xl block mb-2">🍕</span>
+                                <p class="font-semibold">Order Your Favorite Takeout</p>
+                            </div>
+                            <div class="choice-btn text-white p-4 rounded-lg cursor-pointer">
+                                <span class="text-2xl block mb-2">🍳</span>
+                                <p class="font-semibold">Cook Something Fun</p>
+                            </div>
+                            <div class="choice-btn text-white p-4 rounded-lg cursor-pointer">
+                                <span class="text-2xl block mb-2">🥗</span>
+                                <p class="font-semibold">Try Something New</p>
+                            </div>
+                        </div>
+                        
+                        <p class="text-lg font-medium">Remember: Balance is key, but life is meant to be enjoyed! 💫</p>
+                        <p class="text-sm mt-2 opacity-80">Listen to your body and treat yourself with kindness 🤗</p>
+                    </div>
                 </div>
             </section>
         </div>
     </div>
 
     <script>
-        // SUPER SIMPLE FUNCTIONS - NO COMPLEXITY
-        
-        function showWeek(weekNumber) {
-            console.log('🎯 BUTTON CLICKED! Week:', weekNumber);
+        // Week cycling functionality - LIVE AUTOMATIC CYCLING
+        function getCurrentWeek() {
+            // Using August 16, 2025 as Week 2 start date (Friday) - since today (Aug 21) is Week 2
+            const week2StartDate = new Date(2025, 7, 16); // August 16, 2025 (Friday of Week 2)
             
+            const today = new Date();
+            const daysDiff = Math.floor((today - week2StartDate) / (1000 * 60 * 60 * 24));
+            const weeksDiff = Math.floor(daysDiff / 7);
+            
+            // Calculate current week in the 6-week cycle (starting from Week 2)
+            let currentWeek = ((weeksDiff % 6) + 2);
+            
+            // Handle cycle wrapping (after Week 6, go to Week 1)
+            if (currentWeek > 6) {
+                currentWeek = currentWeek - 6;
+            }
+            
+            // Handle negative values (dates before start date)
+            if (currentWeek <= 0) {
+                currentWeek = 6 + currentWeek;
+            }
+            
+            return currentWeek;
+        }
+
+        function getWeekDates(weekNum) {
+            // Calculate based on Week 2 starting August 16, 2025 (Friday)
+            const week2StartDate = new Date(2025, 7, 16); // August 16, 2025 (Friday)
+            
+            // Find current cycle start date
+            const today = new Date();
+            const daysSinceWeek2 = Math.floor((today - week2StartDate) / (1000 * 60 * 60 * 24));
+            const cyclesSinceStart = Math.floor(daysSinceWeek2 / (7 * 6)); // 6 weeks per cycle
+            
+            // Calculate the start of the current 6-week cycle
+            const currentCycleStart = new Date(week2StartDate);
+            currentCycleStart.setDate(week2StartDate.getDate() + (cyclesSinceStart * 7 * 6));
+            
+            // Calculate offset for the requested week (Week 2 = 0 offset, Week 3 = 1 week, etc.)
+            let weekOffset;
+            if (weekNum >= 2) {
+                weekOffset = weekNum - 2; // Week 2=0, Week 3=1, Week 4=2, Week 5=3, Week 6=4
+            } else {
+                weekOffset = weekNum + 4; // Week 1=5 (comes after Week 6 in cycle)
+            }
+            
+            // Calculate the start of the requested week within current cycle
+            const weekStart = new Date(currentCycleStart);
+            weekStart.setDate(currentCycleStart.getDate() + (weekOffset * 7));
+            
+            const dates = {};
+            const dayNames = ['friday', 'saturday', 'sunday', 'monday', 'tuesday'];
+            
+            dayNames.forEach((day, index) => {
+                const date = new Date(weekStart);
+                date.setDate(weekStart.getDate() + index);
+                dates[day] = date;
+            });
+            
+            return dates;
+        }
+
+        function updateDateDisplays(weekNum) {
+            const dates = getWeekDates(weekNum);
+            const options = { month: 'short', day: 'numeric' };
+            
+            // Update individual day dates
+            Object.keys(dates).forEach(day => {
+                const dateStr = dates[day].toLocaleDateString('en-US', options);
+                document.querySelectorAll(`[data-day="${day}"] .date-display`).forEach(el => {
+                    el.textContent = `(${dateStr})`;
+                });
+            });
+            
+            // Update free choice days (Wednesday & Thursday)
+            const wednesdayDate = new Date(dates.tuesday);
+            wednesdayDate.setDate(wednesdayDate.getDate() + 1); // Day after Tuesday
+            const thursdayDate = new Date(dates.tuesday);
+            thursdayDate.setDate(thursdayDate.getDate() + 2); // Two days after Tuesday
+            
+            const wedStr = `(${wednesdayDate.getDate()} ${wednesdayDate.toLocaleDateString('en-US', { month: 'short' })})`;
+            const thuStr = `(${thursdayDate.getDate()} ${thursdayDate.toLocaleDateString('en-US', { month: 'short' })})`;
+            
+            document.querySelectorAll('.free-choice-wed').forEach(el => {
+                el.textContent = wedStr;
+            });
+            document.querySelectorAll('.free-choice-thu').forEach(el => {
+                el.textContent = thuStr;
+            });
+            
+            // Update week range
+            const weekStart = dates.friday;
+            const weekEnd = new Date(dates.tuesday);
+            weekEnd.setDate(weekEnd.getDate() + 2); // Add Wed & Thu
+            
+            const startStr = weekStart.toLocaleDateString('en-US', options);
+            const endStr = weekEnd.toLocaleDateString('en-US', options);
+            
+            document.getElementById('week-date-range').textContent = `${startStr} - ${endStr}`;
+        }
+
+        function showWeek(weekNum) {
             // Hide all weeks
-            const allWeeks = document.querySelectorAll('.week-content');
-            allWeeks.forEach(week => {
-                week.style.display = 'none';
+            document.querySelectorAll('.week-content').forEach(week => {
+                week.classList.add('hidden');
             });
             
             // Show selected week
-            const targetWeek = document.getElementById('week-' + weekNumber);
-            if (targetWeek) {
-                targetWeek.style.display = 'block';
-                console.log('✅ Showing week', weekNumber);
-            }
+            document.getElementById(`week-${weekNum}`).classList.remove('hidden');
             
-            // Update button styles
-            const allButtons = document.querySelectorAll('.week-btn');
-            allButtons.forEach(btn => {
-                btn.classList.remove('active');
-                btn.style.background = '#d1d5db';
-                btn.style.color = '#374151';
+            // Update buttons
+            document.querySelectorAll('.week-btn').forEach(btn => {
+                btn.classList.remove('bg-amber-500', 'text-white');
+                btn.classList.add('bg-gray-300', 'text-gray-700');
             });
             
-            // Highlight active button
-            const activeButton = allButtons[weekNumber - 1];
-            if (activeButton) {
-                activeButton.classList.add('active');
-                activeButton.style.background = 'linear-gradient(135deg, #f59e0b, #d97706)';
-                activeButton.style.color = 'white';
-            }
+            document.querySelector(`[data-week="${weekNum}"]`).classList.remove('bg-gray-300', 'text-gray-700');
+            document.querySelector(`[data-week="${weekNum}"]`).classList.add('bg-amber-500', 'text-white');
             
-            // Visual feedback
-            if (activeButton) {
-                activeButton.style.transform = 'scale(0.95)';
-                setTimeout(() => {
-                    activeButton.style.transform = '';
-                }, 150);
-            }
+            // Update date displays
+            updateDateDisplays(weekNum);
+            
+            // Update current day status for the displayed week
+            updateCurrentDay();
         }
-        
-        function choiceClick(button) {
-            console.log('🎯 Choice button clicked!');
+
+        function updateCurrentInfo() {
+            const today = new Date();
+            const currentWeek = getCurrentWeek();
             
-            // Visual feedback
-            button.style.transform = 'scale(0.95)';
-            button.style.opacity = '0.7';
-            
-            setTimeout(() => {
-                button.style.transform = '';
-                button.style.opacity = '';
-            }, 200);
-        }
-        
-        // Update time display
-        function updateTime() {
-            const now = new Date();
-            document.getElementById('current-date').textContent = now.toLocaleDateString('en-US', { 
+            // Update current date
+            document.getElementById('current-date').textContent = today.toLocaleDateString('en-US', { 
                 weekday: 'long', 
                 year: 'numeric', 
                 month: 'long', 
                 day: 'numeric' 
             });
             
-            document.getElementById('current-time').textContent = now.toLocaleTimeString('en-US', {
+            // Update current time (LIVE)
+            document.getElementById('current-time').textContent = today.toLocaleTimeString('en-US', {
                 hour: '2-digit',
                 minute: '2-digit',
                 second: '2-digit',
                 hour12: true
             });
             
-            document.getElementById('auto-week').textContent = 'Week 2';
-            document.getElementById('week-date-range').textContent = 'Aug 16 - Aug 22';
+            // Update current week
+            document.getElementById('auto-week').textContent = `Week ${currentWeek}`;
         }
-        
+
+        // Current day highlighting with status indicators - FIXED
+        function updateCurrentDay() {
+            const today = new Date();
+            
+            // Get the currently displayed week
+            const activeWeek = document.querySelector('.week-content:not(.hidden)');
+            if (!activeWeek) return;
+            
+            const displayedWeekNum = parseInt(activeWeek.id.split('-')[1]);
+            const weekDates = getWeekDates(displayedWeekNum);
+            
+            document.querySelectorAll('.meal-card').forEach(card => {
+                const dayLabel = card.querySelector('.day-label');
+                const dayName = card.dataset.day;
+                
+                if (dayLabel && dayName && weekDates[dayName]) {
+                    // Remove all status classes
+                    card.classList.remove('current-day', 'past-day', 'upcoming-day');
+                    dayLabel.classList.remove('current', 'past', 'upcoming');
+                    
+                    // Remove existing status indicators
+                    const existingStatus = dayLabel.querySelector('.status-indicator');
+                    if (existingStatus) existingStatus.remove();
+                    
+                    const dayDate = weekDates[dayName];
+                    const todayDate = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+                    const cardDate = new Date(dayDate.getFullYear(), dayDate.getMonth(), dayDate.getDate());
+                    
+                    let statusText = '';
+                    let statusClass = '';
+                    
+                    if (cardDate.getTime() === todayDate.getTime()) {
+                        statusText = '🔴 TODAY';
+                        statusClass = 'current';
+                        card.classList.add('current-day');
+                        dayLabel.classList.add('current');
+                    } else if (cardDate < todayDate) {
+                        statusText = '✅ DONE';
+                        statusClass = 'past';
+                        card.classList.add('past-day');
+                        dayLabel.classList.add('past');
+                    } else {
+                        statusText = '⏳ UPCOMING';
+                        statusClass = 'upcoming';
+                        card.classList.add('upcoming-day');
+                        dayLabel.classList.add('upcoming');
+                    }
+                    
+                    // Add status indicator
+                    const statusSpan = document.createElement('span');
+                    statusSpan.className = `status-indicator text-xs ml-2 px-2 py-1 rounded-full bg-white bg-opacity-20 ${statusClass}`;
+                    statusSpan.textContent = statusText;
+                    dayLabel.querySelector('h3').appendChild(statusSpan);
+                }
+            });
+        }
+
         // Initialize
-        updateTime();
-        setInterval(updateTime, 1000);
+        let currentWeek = getCurrentWeek();
+        let userSelectedWeek = null; // Track if user manually selected a week
+        let lastKnownWeek = currentWeek; // Track week changes
         
-        // Test the functions immediately
-        console.log('🚀 Functions loaded!');
-        console.log('showWeek function:', typeof showWeek);
-        console.log('choiceClick function:', typeof choiceClick);
+        updateCurrentInfo();
+        showWeek(currentWeek);
         
-        // Show Week 2 by default
-        showWeek(2);
+        // Auto-scroll to current day section on page load (ONLY for current week)
+        setTimeout(() => {
+            const today = new Date();
+            const dayOfWeek = today.getDay(); // 0 = Sunday, 3 = Wednesday, 4 = Thursday
+            const currentWeekNum = getCurrentWeek();
+            
+            console.log('Today is day:', dayOfWeek, 'Current week:', currentWeekNum, 'Looking for free choice section...');
+            
+            // Only auto-scroll if we're viewing the current week
+            const activeWeek = document.querySelector('.week-content:not(.hidden)');
+            const isCurrentWeek = activeWeek && activeWeek.id === `week-${currentWeekNum}`;
+            
+            if (isCurrentWeek && (dayOfWeek === 3 || dayOfWeek === 4)) { // Wednesday or Thursday - Free Choice Days!
+                // Wait a bit more for the page to fully render
+                setTimeout(() => {
+                    const restDay = activeWeek.querySelector('.rest-day');
+                    console.log('Found rest day element in current week:', restDay);
+                    
+                    if (restDay) {
+                        // Scroll with more aggressive settings
+                        restDay.scrollIntoView({ 
+                            behavior: 'smooth', 
+                            block: 'start',
+                            inline: 'nearest'
+                        });
+                        
+                        // Alternative scroll method as backup
+                        setTimeout(() => {
+                            window.scrollTo({
+                                top: restDay.offsetTop - 100,
+                                behavior: 'smooth'
+                            });
+                        }, 500);
+                        
+                        // Add a subtle highlight effect
+                        setTimeout(() => {
+                            restDay.style.boxShadow = '0 4px 20px rgba(245, 158, 11, 0.3)';
+                            setTimeout(() => {
+                                restDay.style.boxShadow = '';
+                            }, 2000);
+                        }, 800);
+                    }
+                }, 500);
+            } else if (isCurrentWeek) {
+                // For other days, scroll to the current day's meal card (only in current week)
+                const dayNames = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+                const currentDay = dayNames[dayOfWeek];
+                const currentDayCard = activeWeek.querySelector(`[data-day="${currentDay}"]`);
+                
+                if (currentDayCard) {
+                    currentDayCard.scrollIntoView({ 
+                        behavior: 'smooth', 
+                        block: 'center' 
+                    });
+                }
+            }
+        }, 1500);
+
+        // Week navigation
+        document.querySelectorAll('.week-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const weekNum = parseInt(this.dataset.week);
+                userSelectedWeek = weekNum; // Remember user's choice
+                showWeek(weekNum);
+            });
+        });
+
+        // Choice button interactions
+        document.querySelectorAll('.choice-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const messages = [
+                    "Great choice! Enjoy your meal! 🎉",
+                    "Perfect! Have fun with your food adventure! 🌟",
+                    "Awesome! Treat yourself well! 💖"
+                ];
+                
+                const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+                alert(randomMessage);
+            });
+        });
+
+        // Update every SECOND to keep it truly LIVE with automatic week switching
+        setInterval(() => {
+            updateCurrentInfo();
+            updateCurrentDay();
+            
+            // Check if the week has changed and auto-switch if user hasn't manually selected
+            const newCurrentWeek = getCurrentWeek();
+            if (newCurrentWeek !== lastKnownWeek && userSelectedWeek === null) {
+                console.log(`🔄 LIVE UPDATE: Week changed from ${lastKnownWeek} to ${newCurrentWeek}! Auto-switching...`);
+                lastKnownWeek = newCurrentWeek;
+                currentWeek = newCurrentWeek;
+                showWeek(currentWeek);
+                
+                // Show notification to user about the week change
+                const notification = document.createElement('div');
+                notification.className = 'fixed top-4 right-4 bg-gradient-to-r from-green-500 to-emerald-600 text-white px-6 py-3 rounded-lg shadow-lg z-50 animate-bounce';
+                notification.innerHTML = `
+                    <div class="flex items-center gap-2">
+                        <span class="text-xl">🎉</span>
+                        <span class="font-semibold">Week ${newCurrentWeek} Started!</span>
+                    </div>
+                `;
+                document.body.appendChild(notification);
+                
+                // Remove notification after 5 seconds
+                setTimeout(() => {
+                    notification.remove();
+                }, 5000);
+            }
+            
+            // Reset user selection after 1 hour to allow auto-switching again
+            if (userSelectedWeek !== null) {
+                const oneHour = 60 * 60 * 1000; // 1 hour in milliseconds
+                setTimeout(() => {
+                    if (userSelectedWeek !== null) {
+                        console.log('🔄 Resetting user selection - enabling auto-switching again');
+                        userSelectedWeek = null;
+                    }
+                }, oneHour);
+            }
+        }, 1000);
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'972aee335186be6f',t:'MTc1NTc4NzY5Ny4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'972aae0350a49e0a',t:'MTc1NTc4NTA2OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
