@@ -12,30 +12,53 @@
         .font-inter { font-family: 'Inter', sans-serif; }
         
         .meal-card {
-            transition: box-shadow 0.2s ease;
-            border-left: 4px solid transparent;
+            transition: all 0.3s ease;
+            border-left: 6px solid transparent;
+            background: linear-gradient(135deg, #ffffff, #fefefe, #ffffff);
+            border-radius: 16px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .meal-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent 30%, rgba(245, 158, 11, 0.05) 50%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
         
         .meal-card:hover {
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            box-shadow: 0 8px 25px rgba(245, 158, 11, 0.15);
             border-left-color: #f59e0b;
+            transform: translateY(-2px);
+        }
+        
+        .meal-card:hover::before {
+            opacity: 1;
         }
         
         .meal-card.current-day {
             border-left-color: #dc2626;
-            background: linear-gradient(135deg, #fef2f2, #ffffff);
-            box-shadow: 0 4px 15px rgba(220, 38, 38, 0.2);
+            background: linear-gradient(135deg, #ffffff, #fef2f2, #ffffff);
+            box-shadow: 0 8px 25px rgba(220, 38, 38, 0.3);
+            animation: glow-pulse 3s infinite;
         }
         
         .meal-card.past-day {
             border-left-color: #16a34a;
-            background: linear-gradient(135deg, #f0fdf4, #f9fafb);
-            opacity: 0.8;
+            background: linear-gradient(135deg, #ffffff, #f0fdf4, #ffffff);
+            opacity: 1;
         }
         
         .meal-card.upcoming-day {
             border-left-color: #3b82f6;
-            background: linear-gradient(135deg, #eff6ff, #ffffff);
+            background: linear-gradient(135deg, #ffffff, #eff6ff, #ffffff);
         }
         
         .week-header {
@@ -126,27 +149,92 @@
         }
 
         .meal-name {
-            color: #1f2937;
-            font-size: 1rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            padding: 0.25rem 0.75rem;
-            background: linear-gradient(135deg, #fef3c7, #fde68a);
-            border-radius: 0.5rem;
+            color: #92400e;
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            padding: 0.5rem 1rem;
+            background: linear-gradient(135deg, #fbbf24, #f59e0b, #d97706);
+            border-radius: 12px;
             display: inline-block;
+            box-shadow: 0 2px 8px rgba(245, 158, 11, 0.3);
+            color: white;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .meal-name::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .meal-card:hover .meal-name::before {
+            left: 100%;
         }
     </style>
 </head>
-<body class="bg-gradient-to-br from-orange-50 to-amber-50 min-h-screen font-inter">
+<body class="bg-gradient-to-br from-orange-100 via-red-50 to-pink-100 min-h-screen font-inter relative overflow-x-hidden">
+    <!-- Animated Background Pattern -->
+    <div class="fixed inset-0 opacity-1 pointer-events-none">
+        <div class="absolute top-20 left-10 text-8xl animate-pulse" style="animation-delay: 0s;">🍽️</div>
+        <div class="absolute top-40 right-20 text-6xl animate-bounce" style="animation-delay: 1s;">🥘</div>
+        <div class="absolute top-60 left-1/4 text-7xl animate-pulse" style="animation-delay: 2s;">🍲</div>
+        <div class="absolute top-80 right-1/3 text-5xl animate-bounce" style="animation-delay: 3s;">🥗</div>
+        <div class="absolute bottom-40 left-16 text-8xl animate-pulse" style="animation-delay: 4s;">🍛</div>
+        <div class="absolute bottom-60 right-24 text-6xl animate-bounce" style="animation-delay: 5s;">🍜</div>
+        <div class="absolute bottom-80 left-1/3 text-7xl animate-pulse" style="animation-delay: 6s;">🥙</div>
+        <div class="absolute bottom-20 right-1/4 text-5xl animate-bounce" style="animation-delay: 7s;">🌮</div>
+        <div class="absolute top-1/2 left-8 text-6xl animate-pulse" style="animation-delay: 8s;">🍕</div>
+        <div class="absolute top-1/3 right-8 text-7xl animate-bounce" style="animation-delay: 9s;">🍔</div>
+    </div>
     <!-- Header -->
-    <header class="text-center py-12 bg-white shadow-sm">
-        <div class="flex justify-center items-center gap-3 mb-4">
-            <span class="text-4xl">🍴</span>
-            <h1 class="font-playfair text-4xl font-bold text-gray-800">Meal Planner Menu</h1>
+    <header class="text-center py-12 bg-gradient-to-br from-orange-400 via-red-500 to-pink-500 shadow-lg relative overflow-hidden">
+        <!-- Food Background Pattern -->
+        <div class="absolute inset-0 opacity-20">
+            <div class="absolute top-4 left-8 text-6xl animate-bounce" style="animation-delay: 0s;">🍕</div>
+            <div class="absolute top-16 right-12 text-5xl animate-bounce" style="animation-delay: 0.5s;">🍔</div>
+            <div class="absolute top-8 left-1/4 text-4xl animate-bounce" style="animation-delay: 1s;">🍝</div>
+            <div class="absolute top-20 right-1/4 text-5xl animate-bounce" style="animation-delay: 1.5s;">🥗</div>
+            <div class="absolute bottom-16 left-16 text-6xl animate-bounce" style="animation-delay: 2s;">🍲</div>
+            <div class="absolute bottom-8 right-20 text-4xl animate-bounce" style="animation-delay: 2.5s;">🥘</div>
+            <div class="absolute bottom-12 left-1/3 text-5xl animate-bounce" style="animation-delay: 3s;">🍛</div>
+            <div class="absolute bottom-20 right-1/3 text-4xl animate-bounce" style="animation-delay: 3.5s;">🍜</div>
+            <div class="absolute top-1/2 left-8 text-5xl animate-bounce" style="animation-delay: 4s;">🥙</div>
+            <div class="absolute top-1/2 right-8 text-4xl animate-bounce" style="animation-delay: 4.5s;">🌮</div>
         </div>
-        <p class="text-gray-600 text-lg font-light">Weekly Home Meal Planning</p>
-        <div class="mt-4 flex justify-center">
-            <div class="w-24 h-0.5 bg-gradient-to-r from-amber-400 to-orange-400"></div>
+        
+        <!-- Main Header Content -->
+        <div class="relative z-10">
+            <div class="flex justify-center items-center gap-4 mb-6">
+                <span class="text-6xl animate-pulse">🍴</span>
+                <h1 class="font-playfair text-5xl font-bold text-white drop-shadow-lg">Meal Planner Menu</h1>
+                <span class="text-6xl animate-pulse">🥄</span>
+            </div>
+            
+            <!-- Food Emoji Row -->
+            <div class="flex justify-center items-center gap-3 mb-4 text-4xl">
+                <span class="animate-bounce" style="animation-delay: 0.1s;">🍳</span>
+                <span class="animate-bounce" style="animation-delay: 0.2s;">🥞</span>
+                <span class="animate-bounce" style="animation-delay: 0.3s;">🍖</span>
+                <span class="animate-bounce" style="animation-delay: 0.4s;">🐟</span>
+                <span class="animate-bounce" style="animation-delay: 0.5s;">🥑</span>
+                <span class="animate-bounce" style="animation-delay: 0.6s;">🍅</span>
+                <span class="animate-bounce" style="animation-delay: 0.7s;">🌶️</span>
+            </div>
+            
+            <p class="text-white text-xl font-medium drop-shadow-md mb-2">Weekly Home Meal Planning</p>
+            <p class="text-orange-100 text-lg">🌟 Delicious • Nutritious • Perfectly Planned 🌟</p>
+            
+            <div class="mt-6 flex justify-center">
+                <div class="w-32 h-1 bg-gradient-to-r from-yellow-300 via-white to-yellow-300 rounded-full shadow-lg"></div>
+            </div>
         </div>
         
         <!-- Current Date & Week Info -->
@@ -173,7 +261,7 @@
         </div>
     </header>
 
-    <div class="max-w-7xl mx-auto px-6 py-12">
+    <div class="max-w-7xl mx-auto px-6 py-12 relative z-10">
         <!-- Week 1 Content -->
         <div class="week-content" id="week-1">
             <section class="mb-16">
@@ -181,7 +269,11 @@
                     <h2 class="font-playfair text-3xl font-bold">WEEK 1 – MEAL PLAN</h2>
                 </div>
                 
-                <div class="space-y-6">
+                <div class="space-y-8 relative">
+                    <!-- Decorative floating elements -->
+                    <div class="absolute -top-4 -right-4 text-4xl opacity-20 animate-spin" style="animation-duration: 20s;">⭐</div>
+                    <div class="absolute top-1/4 -left-6 text-3xl opacity-15 animate-bounce" style="animation-delay: 1s;">🌟</div>
+                    <div class="absolute bottom-1/4 -right-8 text-5xl opacity-10 animate-pulse" style="animation-delay: 2s;">✨</div>
                     <!-- Friday -->
                     <div class="meal-card bg-white rounded-lg p-6 shadow-md" data-day="friday">
                         <div class="day-label text-white px-4 py-2 rounded-lg inline-block mb-4">
@@ -189,12 +281,20 @@
                         </div>
                         <div class="grid md:grid-cols-2 gap-6">
                             <div>
-                                <h4 class="font-semibold text-amber-700 mb-3 text-lg">Breakfast</h4>
+                                <h4 class="font-semibold text-amber-700 mb-3 text-lg flex items-center gap-2">
+                                    <span class="text-2xl">🌅</span>
+                                    Breakfast
+                                    <span class="text-xl">🥞</span>
+                                </h4>
                                 <div class="meal-name">American Style Pancake Breakfast</div>
                                 <p class="text-gray-700 leading-relaxed">Pancakes • Beacon • Sausages • Blueberries • Scrambled Egg • Tea (top tea) • Peak • Milk/Almond • Sugar & Honey</p>
                             </div>
                             <div>
-                                <h4 class="font-semibold text-amber-700 mb-3 text-lg">Dinner</h4>
+                                <h4 class="font-semibold text-amber-700 mb-3 text-lg flex items-center gap-2">
+                                    <span class="text-2xl">🌙</span>
+                                    Dinner
+                                    <span class="text-xl">🍽️</span>
+                                </h4>
                                 <div class="meal-name">Gourmet Steak & Mash</div>
                                 <p class="text-gray-700 leading-relaxed">Mash Potatoes • Steak/Salmon/Lamb chops • Veggie Sauce: Broccoli, Cauliflower, All Coloured Pepper, Mushroom • 1 cup cold almond milk</p>
                             </div>
@@ -208,12 +308,20 @@
                         </div>
                         <div class="grid md:grid-cols-2 gap-6">
                             <div>
-                                <h4 class="font-semibold text-amber-700 mb-3 text-lg">Breakfast</h4>
+                                <h4 class="font-semibold text-amber-700 mb-3 text-lg flex items-center gap-2">
+                                    <span class="text-2xl">🌅</span>
+                                    Breakfast
+                                    <span class="text-xl">🥞</span>
+                                </h4>
                                 <div class="meal-name">Traditional Nigerian Breakfast</div>
                                 <p class="text-gray-700 leading-relaxed">Pap • Akara • Beans • Un-Slice Bread • Milk and Sugar</p>
                             </div>
                             <div>
-                                <h4 class="font-semibold text-amber-700 mb-3 text-lg">Dinner</h4>
+                                <h4 class="font-semibold text-amber-700 mb-3 text-lg flex items-center gap-2">
+                                    <span class="text-2xl">🌙</span>
+                                    Dinner
+                                    <span class="text-xl">🍽️</span>
+                                </h4>
                                 <div class="meal-name">Banga Soup Special</div>
                                 <p class="text-gray-700 leading-relaxed">Banga Soup • Bush Meat: Grasscutter, Antelope Lap, Bush Meat • Well fried Beef • Perewinkle • Starch/eba</p>
                             </div>
@@ -227,12 +335,20 @@
                         </div>
                         <div class="grid md:grid-cols-2 gap-6">
                             <div>
-                                <h4 class="font-semibold text-amber-700 mb-3 text-lg">Breakfast</h4>
+                                <h4 class="font-semibold text-amber-700 mb-3 text-lg flex items-center gap-2">
+                                    <span class="text-2xl">🌅</span>
+                                    Breakfast
+                                    <span class="text-xl">🥞</span>
+                                </h4>
                                 <div class="meal-name">Deluxe Club Sandwich</div>
                                 <p class="text-gray-700 leading-relaxed">Club Sandwich • Pickle • Ham/Bacon • SSE (egg) • Avocado Paste • French Fries • Potato Wedges • 1 cup almond milk • Ketchup • Peper sauce</p>
                             </div>
                             <div>
-                                <h4 class="font-semibold text-amber-700 mb-3 text-lg">Dinner</h4>
+                                <h4 class="font-semibold text-amber-700 mb-3 text-lg flex items-center gap-2">
+                                    <span class="text-2xl">🌙</span>
+                                    Dinner
+                                    <span class="text-xl">🍽️</span>
+                                </h4>
                                 <div class="meal-name">Sunday Special Rice & Chicken</div>
                                 <p class="text-gray-700 leading-relaxed">Basmati White Rice • Sweet Red Stew • Fried Live Chicken or Guinea Fowl • Well Fried Diced Beef • Well Fried Turkey • Banana • Maltina</p>
                             </div>
@@ -246,12 +362,20 @@
                         </div>
                         <div class="grid md:grid-cols-2 gap-6">
                             <div>
-                                <h4 class="font-semibold text-amber-700 mb-3 text-lg">Breakfast</h4>
+                                <h4 class="font-semibold text-amber-700 mb-3 text-lg flex items-center gap-2">
+                                    <span class="text-2xl">🌅</span>
+                                    Breakfast
+                                    <span class="text-xl">🥞</span>
+                                </h4>
                                 <div class="meal-name">Mediterranean Couscous Bowl</div>
                                 <p class="text-gray-700 leading-relaxed">Couscous • All Coloured Bell Pepper • Salmon • Avocado Slice • Red Apple Slice with Cinnamon • Fresh Juice: Pineapple, Orange</p>
                             </div>
                             <div>
-                                <h4 class="font-semibold text-amber-700 mb-3 text-lg">Dinner</h4>
+                                <h4 class="font-semibold text-amber-700 mb-3 text-lg flex items-center gap-2">
+                                    <span class="text-2xl">🌙</span>
+                                    Dinner
+                                    <span class="text-xl">🍽️</span>
+                                </h4>
                                 <div class="meal-name">Creamy Alfredo Pasta</div>
                                 <p class="text-gray-700 leading-relaxed">Alfredo Pasta • Mushroom • Diced Chicken • Prawns • Coke/Fanta or Bottled Juice</p>
                             </div>
@@ -265,12 +389,20 @@
                         </div>
                         <div class="grid md:grid-cols-2 gap-6">
                             <div>
-                                <h4 class="font-semibold text-amber-700 mb-3 text-lg">Breakfast</h4>
+                                <h4 class="font-semibold text-amber-700 mb-3 text-lg flex items-center gap-2">
+                                    <span class="text-2xl">🌅</span>
+                                    Breakfast
+                                    <span class="text-xl">🥞</span>
+                                </h4>
                                 <div class="meal-name">Nigerian Egg Sauce Combo</div>
                                 <p class="text-gray-700 leading-relaxed">Egg Sauce • Fried Plantain • Fried Sweet Potato • Fried Yam • Avocado Slice • Fresh Pineapple Juice</p>
                             </div>
                             <div>
-                                <h4 class="font-semibold text-amber-700 mb-3 text-lg">Dinner</h4>
+                                <h4 class="font-semibold text-amber-700 mb-3 text-lg flex items-center gap-2">
+                                    <span class="text-2xl">🌙</span>
+                                    Dinner
+                                    <span class="text-xl">🍽️</span>
+                                </h4>
                                 <div class="meal-name">Classic Jollof Rice Feast</div>
                                 <p class="text-gray-700 leading-relaxed"><strong>Jollof Rice</strong> • Beans • Black Roasted chicken • Well Fried Big Snail & Turkey • Plantain • Vegetable Sauce: Egu & Shoko • Coke/Fanta or Bottled Juice</p>
                             </div>
@@ -315,7 +447,11 @@
                     <h2 class="font-playfair text-3xl font-bold">WEEK 2 – MEAL PLAN</h2>
                 </div>
                 
-                <div class="space-y-6">
+                <div class="space-y-8 relative">
+                    <!-- Decorative floating elements -->
+                    <div class="absolute -top-4 -right-4 text-4xl opacity-20 animate-spin" style="animation-duration: 20s;">⭐</div>
+                    <div class="absolute top-1/4 -left-6 text-3xl opacity-15 animate-bounce" style="animation-delay: 1s;">🌟</div>
+                    <div class="absolute bottom-1/4 -right-8 text-5xl opacity-10 animate-pulse" style="animation-delay: 2s;">✨</div>
                     <!-- Friday -->
                     <div class="meal-card bg-white rounded-lg p-6 shadow-md" data-day="friday">
                         <div class="day-label text-white px-4 py-2 rounded-lg inline-block mb-4">
@@ -323,12 +459,20 @@
                         </div>
                         <div class="grid md:grid-cols-2 gap-6">
                             <div>
-                                <h4 class="font-semibold text-amber-700 mb-3 text-lg">Breakfast</h4>
+                                <h4 class="font-semibold text-amber-700 mb-3 text-lg flex items-center gap-2">
+                                    <span class="text-2xl">🌅</span>
+                                    Breakfast
+                                    <span class="text-xl">🥞</span>
+                                </h4>
                                 <div class="meal-name">Protein-Rich Lentil Bowl</div>
                                 <p class="text-gray-700 leading-relaxed">Mix lentil • Chicken Cream Sauce • Pineapple Juice</p>
                             </div>
                             <div>
-                                <h4 class="font-semibold text-amber-700 mb-3 text-lg">Dinner</h4>
+                                <h4 class="font-semibold text-amber-700 mb-3 text-lg flex items-center gap-2">
+                                    <span class="text-2xl">🌙</span>
+                                    Dinner
+                                    <span class="text-xl">🍽️</span>
+                                </h4>
                                 <div class="meal-name">Traditional White Soup</div>
                                 <p class="text-gray-700 leading-relaxed">White Soup • Fresh Catfish • Pork (beef part) • Soft Brisket bone • Smoke Titus • Eba</p>
                             </div>
@@ -342,12 +486,20 @@
                         </div>
                         <div class="grid md:grid-cols-2 gap-6">
                             <div>
-                                <h4 class="font-semibold text-amber-700 mb-3 text-lg">Breakfast</h4>
+                                <h4 class="font-semibold text-amber-700 mb-3 text-lg flex items-center gap-2">
+                                    <span class="text-2xl">🌅</span>
+                                    Breakfast
+                                    <span class="text-xl">🥞</span>
+                                </h4>
                                 <div class="meal-name">Plantain Mio Mio Delight</div>
                                 <p class="text-gray-700 leading-relaxed">Plantain Mio Mio • Diced Fried Gizzard • All Coloured Bell Pepper • Pepper Sauce • Coleslaw • Avocado • Orange Juice</p>
                             </div>
                             <div>
-                                <h4 class="font-semibold text-amber-700 mb-3 text-lg">Dinner</h4>
+                                <h4 class="font-semibold text-amber-700 mb-3 text-lg flex items-center gap-2">
+                                    <span class="text-2xl">🌙</span>
+                                    Dinner
+                                    <span class="text-xl">🍽️</span>
+                                </h4>
                                 <div class="meal-name">BBQ Catfish Platter</div>
                                 <p class="text-gray-700 leading-relaxed">BBQ Catfish • Plantain • French Fries • Avocado Pasta • Coleslaw • Maltina</p>
                             </div>
@@ -361,12 +513,20 @@
                         </div>
                         <div class="grid md:grid-cols-2 gap-6">
                             <div>
-                                <h4 class="font-semibold text-amber-700 mb-3 text-lg">Breakfast</h4>
+                                <h4 class="font-semibold text-amber-700 mb-3 text-lg flex items-center gap-2">
+                                    <span class="text-2xl">🌅</span>
+                                    Breakfast
+                                    <span class="text-xl">🥞</span>
+                                </h4>
                                 <div class="meal-name">Gourmet Burger Experience</div>
                                 <p class="text-gray-700 leading-relaxed">Burger • Lettuce • Cheese • Pickle • Chicken or Beef • Mayo Mix Sauce • Fries • 1 cup of Almond Milk • Ham/Bacon • ketchup+peper sauce</p>
                             </div>
                             <div>
-                                <h4 class="font-semibold text-amber-700 mb-3 text-lg">Dinner</h4>
+                                <h4 class="font-semibold text-amber-700 mb-3 text-lg flex items-center gap-2">
+                                    <span class="text-2xl">🌙</span>
+                                    Dinner
+                                    <span class="text-xl">🍽️</span>
+                                </h4>
                                 <div class="meal-name">Sunday Rice & Assorted</div>
                                 <p class="text-gray-700 leading-relaxed">Normal White Rice • Sweet Red Stew • All Assorted • Kpomo • Fried Plantain • Maltina</p>
                             </div>
@@ -380,12 +540,20 @@
                         </div>
                         <div class="grid md:grid-cols-2 gap-6">
                             <div>
-                                <h4 class="font-semibold text-amber-700 mb-3 text-lg">Breakfast</h4>
+                                <h4 class="font-semibold text-amber-700 mb-3 text-lg flex items-center gap-2">
+                                    <span class="text-2xl">🌅</span>
+                                    Breakfast
+                                    <span class="text-xl">🥞</span>
+                                </h4>
                                 <div class="meal-name">Crispy Hashbrown Breakfast</div>
                                 <p class="text-gray-700 leading-relaxed">Hashbrown • SSE (egg) • Beacon • Sausages • Avocado Paste • Whip Cream • Ketchup • peper sauce • Orange Juice</p>
                             </div>
                             <div>
-                                <h4 class="font-semibold text-amber-700 mb-3 text-lg">Dinner</h4>
+                                <h4 class="font-semibold text-amber-700 mb-3 text-lg flex items-center gap-2">
+                                    <span class="text-2xl">🌙</span>
+                                    Dinner
+                                    <span class="text-xl">🍽️</span>
+                                </h4>
                                 <div class="meal-name">Hearty Beans Porridge</div>
                                 <p class="text-gray-700 leading-relaxed">Porridge • Beans • Yam • Sweet Potatoes • Ripe Plantain • Diced Beef • Coke/Fanta</p>
                             </div>
@@ -399,12 +567,20 @@
                         </div>
                         <div class="grid md:grid-cols-2 gap-6">
                             <div>
-                                <h4 class="font-semibold text-amber-700 mb-3 text-lg">Breakfast</h4>
+                                <h4 class="font-semibold text-amber-700 mb-3 text-lg flex items-center gap-2">
+                                    <span class="text-2xl">🌅</span>
+                                    Breakfast
+                                    <span class="text-xl">🥞</span>
+                                </h4>
                                 <div class="meal-name">Colorful Noodles Bowl</div>
                                 <p class="text-gray-700 leading-relaxed"><strong>Noodles</strong> • Diced chicken • All Coloured Bell Pepper • Pickle • Tasty Broccoli • Omelet Egg • Fresh Orange Juice</p>
                             </div>
                             <div>
-                                <h4 class="font-semibold text-amber-700 mb-3 text-lg">Dinner</h4>
+                                <h4 class="font-semibold text-amber-700 mb-3 text-lg flex items-center gap-2">
+                                    <span class="text-2xl">🌙</span>
+                                    Dinner
+                                    <span class="text-xl">🍽️</span>
+                                </h4>
                                 <div class="meal-name">Chinese Fried Rice Special</div>
                                 <p class="text-gray-700 leading-relaxed">Chinese Fried Rice • Eggs in rice • Steak/Salmon/Lamb chops • Orange Juice</p>
                             </div>
@@ -449,7 +625,11 @@
                     <h2 class="font-playfair text-3xl font-bold">WEEK 3 – MEAL PLAN</h2>
                 </div>
                 
-                <div class="space-y-6">
+                <div class="space-y-8 relative">
+                    <!-- Decorative floating elements -->
+                    <div class="absolute -top-4 -right-4 text-4xl opacity-20 animate-spin" style="animation-duration: 20s;">⭐</div>
+                    <div class="absolute top-1/4 -left-6 text-3xl opacity-15 animate-bounce" style="animation-delay: 1s;">🌟</div>
+                    <div class="absolute bottom-1/4 -right-8 text-5xl opacity-10 animate-pulse" style="animation-delay: 2s;">✨</div>
                     <!-- Friday -->
                     <div class="meal-card bg-white rounded-lg p-6 shadow-md" data-day="friday">
                         <div class="day-label text-white px-4 py-2 rounded-lg inline-block mb-4">
@@ -457,12 +637,20 @@
                         </div>
                         <div class="grid md:grid-cols-2 gap-6">
                             <div>
-                                <h4 class="font-semibold text-amber-700 mb-3 text-lg">Breakfast</h4>
+                                <h4 class="font-semibold text-amber-700 mb-3 text-lg flex items-center gap-2">
+                                    <span class="text-2xl">🌅</span>
+                                    Breakfast
+                                    <span class="text-xl">🥞</span>
+                                </h4>
                                 <div class="meal-name">Boiled Tubers & Veggie Sauce</div>
                                 <p class="text-gray-700 leading-relaxed">Boiled Yam, Sweet Potatoes, Ripe Plantain • Vegetable Sauce • Smoked Titus Fish • Orange Juice</p>
                             </div>
                             <div>
-                                <h4 class="font-semibold text-amber-700 mb-3 text-lg">Dinner</h4>
+                                <h4 class="font-semibold text-amber-700 mb-3 text-lg flex items-center gap-2">
+                                    <span class="text-2xl">🌙</span>
+                                    Dinner
+                                    <span class="text-xl">🍽️</span>
+                                </h4>
                                 <div class="meal-name">Caesar Salad with Rotini</div>
                                 <p class="text-gray-700 leading-relaxed">Caesar Salad with Rotini Pasta • Diced chicken • Diced bread • Lettuce • Cucumber • Cherry tomatoes • Parmesan Cheese • Parsley • Pickle • Raisins • Orange juice</p>
                             </div>
@@ -476,12 +664,20 @@
                         </div>
                         <div class="grid md:grid-cols-2 gap-6">
                             <div>
-                                <h4 class="font-semibold text-amber-700 mb-3 text-lg">Breakfast</h4>
+                                <h4 class="font-semibold text-amber-700 mb-3 text-lg flex items-center gap-2">
+                                    <span class="text-2xl">🌅</span>
+                                    Breakfast
+                                    <span class="text-xl">🥞</span>
+                                </h4>
                                 <div class="meal-name">Chinese Beef & Broccoli</div>
                                 <p class="text-gray-700 leading-relaxed"><strong>Chinese Beef and Broccoli sauce</strong> • Boiled Basmati rice • Pineapple Juice</p>
                             </div>
                             <div>
-                                <h4 class="font-semibold text-amber-700 mb-3 text-lg">Dinner</h4>
+                                <h4 class="font-semibold text-amber-700 mb-3 text-lg flex items-center gap-2">
+                                    <span class="text-2xl">🌙</span>
+                                    Dinner
+                                    <span class="text-xl">🍽️</span>
+                                </h4>
                                 <div class="meal-name">Ukodo Pepper Soup</div>
                                 <p class="text-gray-700 leading-relaxed">Ukodo: Yam and Unripe Plantain Pepper Soup • Live Chicken • Goat Meat • Fruits slice as sides</p>
                             </div>
@@ -495,12 +691,20 @@
                         </div>
                         <div class="grid md:grid-cols-2 gap-6">
                             <div>
-                                <h4 class="font-semibold text-amber-700 mb-3 text-lg">Breakfast</h4>
+                                <h4 class="font-semibold text-amber-700 mb-3 text-lg flex items-center gap-2">
+                                    <span class="text-2xl">🌅</span>
+                                    Breakfast
+                                    <span class="text-xl">🥞</span>
+                                </h4>
                                 <div class="meal-name">Fried Fish & Fries</div>
                                 <p class="text-gray-700 leading-relaxed"><strong>Fried Croaker or Fried Red Snapper</strong> • French Fries • Coleslaw • Pepper sauce and Ketchup • Orange Juice</p>
                             </div>
                             <div>
-                                <h4 class="font-semibold text-amber-700 mb-3 text-lg">Dinner</h4>
+                                <h4 class="font-semibold text-amber-700 mb-3 text-lg flex items-center gap-2">
+                                    <span class="text-2xl">🌙</span>
+                                    Dinner
+                                    <span class="text-xl">🍽️</span>
+                                </h4>
                                 <div class="meal-name">Brown Rice & Fish Special</div>
                                 <p class="text-gray-700 leading-relaxed">Brown Rice • Sweet Red Stew • Well Fried Red Snapper • Well Fried Catfish • Banana or plantain • Maltina</p>
                             </div>
@@ -514,12 +718,20 @@
                         </div>
                         <div class="grid md:grid-cols-2 gap-6">
                             <div>
-                                <h4 class="font-semibold text-amber-700 mb-3 text-lg">Breakfast</h4>
+                                <h4 class="font-semibold text-amber-700 mb-3 text-lg flex items-center gap-2">
+                                    <span class="text-2xl">🌅</span>
+                                    Breakfast
+                                    <span class="text-xl">🥞</span>
+                                </h4>
                                 <div class="meal-name">Chicken & Beef Shawarma</div>
                                 <p class="text-gray-700 leading-relaxed">Chicken & beef Shawarma/Tacos • Avocado paste • Orange and Pineapple Juice</p>
                             </div>
                             <div>
-                                <h4 class="font-semibold text-amber-700 mb-3 text-lg">Dinner</h4>
+                                <h4 class="font-semibold text-amber-700 mb-3 text-lg flex items-center gap-2">
+                                    <span class="text-2xl">🌙</span>
+                                    Dinner
+                                    <span class="text-xl">🍽️</span>
+                                </h4>
                                 <div class="meal-name">Rich Egusi Soup</div>
                                 <p class="text-gray-700 leading-relaxed">Egusi Soup • egu vegi • shoko vegi • Goat Meat • live cook Chicken • smoked titus • Well fried beef • Perewinkle</p>
                             </div>
@@ -533,12 +745,20 @@
                         </div>
                         <div class="grid md:grid-cols-2 gap-6">
                             <div>
-                                <h4 class="font-semibold text-amber-700 mb-3 text-lg">Breakfast</h4>
+                                <h4 class="font-semibold text-amber-700 mb-3 text-lg flex items-center gap-2">
+                                    <span class="text-2xl">🌅</span>
+                                    Breakfast
+                                    <span class="text-xl">🥞</span>
+                                </h4>
                                 <div class="meal-name">Classic Spaghetti Bolognese</div>
                                 <p class="text-gray-700 leading-relaxed">Spaghetti Bolognese • 1 cup of cold Almond Milk</p>
                             </div>
                             <div>
-                                <h4 class="font-semibold text-amber-700 mb-3 text-lg">Dinner</h4>
+                                <h4 class="font-semibold text-amber-700 mb-3 text-lg flex items-center gap-2">
+                                    <span class="text-2xl">🌙</span>
+                                    Dinner
+                                    <span class="text-xl">🍽️</span>
+                                </h4>
                                 <div class="meal-name">Ofada Rice & Sauce</div>
                                 <p class="text-gray-700 leading-relaxed">Ofada Rice and Sauce • Assorted • Fried Plantain • Maltina</p>
                             </div>
@@ -583,7 +803,11 @@
                     <h2 class="font-playfair text-3xl font-bold">WEEK 4 – MEAL PLAN</h2>
                 </div>
                 
-                <div class="space-y-6">
+                <div class="space-y-8 relative">
+                    <!-- Decorative floating elements -->
+                    <div class="absolute -top-4 -right-4 text-4xl opacity-20 animate-spin" style="animation-duration: 20s;">⭐</div>
+                    <div class="absolute top-1/4 -left-6 text-3xl opacity-15 animate-bounce" style="animation-delay: 1s;">🌟</div>
+                    <div class="absolute bottom-1/4 -right-8 text-5xl opacity-10 animate-pulse" style="animation-delay: 2s;">✨</div>
                     <!-- Friday -->
                     <div class="meal-card bg-white rounded-lg p-6 shadow-md" data-day="friday">
                         <div class="day-label text-white px-4 py-2 rounded-lg inline-block mb-4">
@@ -591,12 +815,20 @@
                         </div>
                         <div class="grid md:grid-cols-2 gap-6">
                             <div>
-                                <h4 class="font-semibold text-amber-700 mb-3 text-lg">Breakfast</h4>
+                                <h4 class="font-semibold text-amber-700 mb-3 text-lg flex items-center gap-2">
+                                    <span class="text-2xl">🌅</span>
+                                    Breakfast
+                                    <span class="text-xl">🥞</span>
+                                </h4>
                                 <div class="meal-name">American Style Pancake Breakfast</div>
                                 <p class="text-gray-700 leading-relaxed">Pancakes • Beacon • Sausages • Blueberries • Scrambled Egg • Tea (top tea) • Peak • Milk/Almond • Sugar & Honey</p>
                             </div>
                             <div>
-                                <h4 class="font-semibold text-amber-700 mb-3 text-lg">Dinner</h4>
+                                <h4 class="font-semibold text-amber-700 mb-3 text-lg flex items-center gap-2">
+                                    <span class="text-2xl">🌙</span>
+                                    Dinner
+                                    <span class="text-xl">🍽️</span>
+                                </h4>
                                 <div class="meal-name">Efo Ri Ro Special</div>
                                 <p class="text-gray-700 leading-relaxed">Efo Ri Ro • Well fried red snapper • Shaki • kopmor • Smoked mackerel/Smoke titus • Perewinkle</p>
                             </div>
@@ -610,12 +842,20 @@
                         </div>
                         <div class="grid md:grid-cols-2 gap-6">
                             <div>
-                                <h4 class="font-semibold text-amber-700 mb-3 text-lg">Breakfast</h4>
+                                <h4 class="font-semibold text-amber-700 mb-3 text-lg flex items-center gap-2">
+                                    <span class="text-2xl">🌅</span>
+                                    Breakfast
+                                    <span class="text-xl">🥞</span>
+                                </h4>
                                 <div class="meal-name">Traditional Nigerian Breakfast</div>
                                 <p class="text-gray-700 leading-relaxed">Pap • Akara • Beans • Un-Slice Bread • Milk and Sugar</p>
                             </div>
                             <div>
-                                <h4 class="font-semibold text-amber-700 mb-3 text-lg">Dinner</h4>
+                                <h4 class="font-semibold text-amber-700 mb-3 text-lg flex items-center gap-2">
+                                    <span class="text-2xl">🌙</span>
+                                    Dinner
+                                    <span class="text-xl">🍽️</span>
+                                </h4>
                                 <div class="meal-name">Chicken Curry & Potatoes</div>
                                 <p class="text-gray-700 leading-relaxed">Chicken Curry • irish and sweet potatoes • Live Chicken • Banana • Fresh Juice: Pineapple, Orange</p>
                             </div>
@@ -629,12 +869,20 @@
                         </div>
                         <div class="grid md:grid-cols-2 gap-6">
                             <div>
-                                <h4 class="font-semibold text-amber-700 mb-3 text-lg">Breakfast</h4>
+                                <h4 class="font-semibold text-amber-700 mb-3 text-lg flex items-center gap-2">
+                                    <span class="text-2xl">🌅</span>
+                                    Breakfast
+                                    <span class="text-xl">🥞</span>
+                                </h4>
                                 <div class="meal-name">Deluxe Club Sandwich</div>
                                 <p class="text-gray-700 leading-relaxed">Club Sandwich • Pickle • Ham/Bacon • SSE (egg) • Avocado Paste • French Fries • Potato Wedges • 1 cup almond milk • Ketchup • Peper sauce</p>
                             </div>
                             <div>
-                                <h4 class="font-semibold text-amber-700 mb-3 text-lg">Dinner</h4>
+                                <h4 class="font-semibold text-amber-700 mb-3 text-lg flex items-center gap-2">
+                                    <span class="text-2xl">🌙</span>
+                                    Dinner
+                                    <span class="text-xl">🍽️</span>
+                                </h4>
                                 <div class="meal-name">Sunday Special Rice & Chicken</div>
                                 <p class="text-gray-700 leading-relaxed">Basmati White Rice • Sweet Red Stew • Fried Live Chicken • Well Fried Diced Beef • Well Fried Turkey • Banana • Maltina</p>
                             </div>
@@ -648,12 +896,20 @@
                         </div>
                         <div class="grid md:grid-cols-2 gap-6">
                             <div>
-                                <h4 class="font-semibold text-amber-700 mb-3 text-lg">Breakfast</h4>
+                                <h4 class="font-semibold text-amber-700 mb-3 text-lg flex items-center gap-2">
+                                    <span class="text-2xl">🌅</span>
+                                    Breakfast
+                                    <span class="text-xl">🥞</span>
+                                </h4>
                                 <div class="meal-name">Mediterranean Couscous Bowl</div>
                                 <p class="text-gray-700 leading-relaxed">Couscous • All Coloured Bell Pepper • Salmon • Avocado Slice • Red Apple Slice with Cinnamon • Fresh Juice: Pineapple, Orange</p>
                             </div>
                             <div>
-                                <h4 class="font-semibold text-amber-700 mb-3 text-lg">Dinner</h4>
+                                <h4 class="font-semibold text-amber-700 mb-3 text-lg flex items-center gap-2">
+                                    <span class="text-2xl">🌙</span>
+                                    Dinner
+                                    <span class="text-xl">🍽️</span>
+                                </h4>
                                 <div class="meal-name">Traditional Ogbono Soup</div>
                                 <p class="text-gray-700 leading-relaxed">Ogbono soup • Goat Meat • Beef • Smoked Horse mackerel/Smoke titus • Bonga fish • Perewinkle</p>
                             </div>
@@ -667,12 +923,20 @@
                         </div>
                         <div class="grid md:grid-cols-2 gap-6">
                             <div>
-                                <h4 class="font-semibold text-amber-700 mb-3 text-lg">Breakfast</h4>
+                                <h4 class="font-semibold text-amber-700 mb-3 text-lg flex items-center gap-2">
+                                    <span class="text-2xl">🌅</span>
+                                    Breakfast
+                                    <span class="text-xl">🥞</span>
+                                </h4>
                                 <div class="meal-name">Nigerian Egg Sauce Combo</div>
                                 <p class="text-gray-700 leading-relaxed">Egg Sauce • Fried Plantain • Fried Sweet Potato • Fried Yam • Avocado Slice • Fresh Pineapple Juice</p>
                             </div>
                             <div>
-                                <h4 class="font-semibold text-amber-700 mb-3 text-lg">Dinner</h4>
+                                <h4 class="font-semibold text-amber-700 mb-3 text-lg flex items-center gap-2">
+                                    <span class="text-2xl">🌙</span>
+                                    Dinner
+                                    <span class="text-xl">🍽️</span>
+                                </h4>
                                 <div class="meal-name">Fresh Catfish Pepper Soup</div>
                                 <p class="text-gray-700 leading-relaxed">Normal White rice • Fresh Catfish Pepper Soup • Fruits slice as side</p>
                             </div>
@@ -717,7 +981,11 @@
                     <h2 class="font-playfair text-3xl font-bold">WEEK 5 – MEAL PLAN</h2>
                 </div>
                 
-                <div class="space-y-6">
+                <div class="space-y-8 relative">
+                    <!-- Decorative floating elements -->
+                    <div class="absolute -top-4 -right-4 text-4xl opacity-20 animate-spin" style="animation-duration: 20s;">⭐</div>
+                    <div class="absolute top-1/4 -left-6 text-3xl opacity-15 animate-bounce" style="animation-delay: 1s;">🌟</div>
+                    <div class="absolute bottom-1/4 -right-8 text-5xl opacity-10 animate-pulse" style="animation-delay: 2s;">✨</div>
                     <!-- Friday -->
                     <div class="meal-card bg-white rounded-lg p-6 shadow-md" data-day="friday">
                         <div class="day-label text-white px-4 py-2 rounded-lg inline-block mb-4">
@@ -725,12 +993,20 @@
                         </div>
                         <div class="grid md:grid-cols-2 gap-6">
                             <div>
-                                <h4 class="font-semibold text-amber-700 mb-3 text-lg">Breakfast</h4>
+                                <h4 class="font-semibold text-amber-700 mb-3 text-lg flex items-center gap-2">
+                                    <span class="text-2xl">🌅</span>
+                                    Breakfast
+                                    <span class="text-xl">🥞</span>
+                                </h4>
                                 <div class="meal-name">Protein-Rich Lentil Bowl</div>
                                 <p class="text-gray-700 leading-relaxed">Mix lentil • Chicken Cream Sauce • Pineapple Juice</p>
                             </div>
                             <div>
-                                <h4 class="font-semibold text-amber-700 mb-3 text-lg">Dinner</h4>
+                                <h4 class="font-semibold text-amber-700 mb-3 text-lg flex items-center gap-2">
+                                    <span class="text-2xl">🌙</span>
+                                    Dinner
+                                    <span class="text-xl">🍽️</span>
+                                </h4>
                                 <div class="meal-name">Authentic Oha Soup</div>
                                 <p class="text-gray-700 leading-relaxed">Oha soup – Real Cocoyam • Goat meat • Pork Beef • Smoked Titus Fish • Eba</p>
                             </div>
@@ -744,12 +1020,20 @@
                         </div>
                         <div class="grid md:grid-cols-2 gap-6">
                             <div>
-                                <h4 class="font-semibold text-amber-700 mb-3 text-lg">Breakfast</h4>
+                                <h4 class="font-semibold text-amber-700 mb-3 text-lg flex items-center gap-2">
+                                    <span class="text-2xl">🌅</span>
+                                    Breakfast
+                                    <span class="text-xl">🥞</span>
+                                </h4>
                                 <div class="meal-name">Plantain Mio Mio Delight</div>
                                 <p class="text-gray-700 leading-relaxed">Plantain Mio Mio • Diced Fried Gizzard • All Coloured Bell Pepper • Pepper Sauce • Coleslaw • Avocado • Orange Juice</p>
                             </div>
                             <div>
-                                <h4 class="font-semibold text-amber-700 mb-3 text-lg">Dinner</h4>
+                                <h4 class="font-semibold text-amber-700 mb-3 text-lg flex items-center gap-2">
+                                    <span class="text-2xl">🌙</span>
+                                    Dinner
+                                    <span class="text-xl">🍽️</span>
+                                </h4>
                                 <div class="meal-name">Ijebu Egusi Special</div>
                                 <p class="text-gray-700 leading-relaxed">iJebu Egusi • Cowleg • Shaki • Dried Catfish • Smoked Titus fish • Perewinkle • Eba</p>
                             </div>
@@ -763,12 +1047,20 @@
                         </div>
                         <div class="grid md:grid-cols-2 gap-6">
                             <div>
-                                <h4 class="font-semibold text-amber-700 mb-3 text-lg">Breakfast</h4>
+                                <h4 class="font-semibold text-amber-700 mb-3 text-lg flex items-center gap-2">
+                                    <span class="text-2xl">🌅</span>
+                                    Breakfast
+                                    <span class="text-xl">🥞</span>
+                                </h4>
                                 <div class="meal-name">Gourmet Burger Experience</div>
                                 <p class="text-gray-700 leading-relaxed">Burger • Lettuce • Cheese • Pickle • Chicken or Beef • Mayo Mix Sauce • Fries • 1 cup of Almond Milk • Ham/Bacon • ketchup+peper sauce</p>
                             </div>
                             <div>
-                                <h4 class="font-semibold text-amber-700 mb-3 text-lg">Dinner</h4>
+                                <h4 class="font-semibold text-amber-700 mb-3 text-lg flex items-center gap-2">
+                                    <span class="text-2xl">🌙</span>
+                                    Dinner
+                                    <span class="text-xl">🍽️</span>
+                                </h4>
                                 <div class="meal-name">Sunday Rice & Assorted</div>
                                 <p class="text-gray-700 leading-relaxed">Normal White Rice • Sweet Red Stew • All Assorted • Kpomo • Fried Plantain • Maltina</p>
                             </div>
@@ -782,12 +1074,20 @@
                         </div>
                         <div class="grid md:grid-cols-2 gap-6">
                             <div>
-                                <h4 class="font-semibold text-amber-700 mb-3 text-lg">Breakfast</h4>
+                                <h4 class="font-semibold text-amber-700 mb-3 text-lg flex items-center gap-2">
+                                    <span class="text-2xl">🌅</span>
+                                    Breakfast
+                                    <span class="text-xl">🥞</span>
+                                </h4>
                                 <div class="meal-name">Crispy Hashbrown Breakfast</div>
                                 <p class="text-gray-700 leading-relaxed">Hashbrown • SSE (egg) • Beacon • Sausages • Avocado Paste • Whip Cream • Ketchup • peper sauce • Orange Juice</p>
                             </div>
                             <div>
-                                <h4 class="font-semibold text-amber-700 mb-3 text-lg">Dinner</h4>
+                                <h4 class="font-semibold text-amber-700 mb-3 text-lg flex items-center gap-2">
+                                    <span class="text-2xl">🌙</span>
+                                    Dinner
+                                    <span class="text-xl">🍽️</span>
+                                </h4>
                                 <div class="meal-name">Edikaikong Soup</div>
                                 <p class="text-gray-700 leading-relaxed">Edikaikong • All Assorted and Shaki • Beef • Perewinkle • Pounded Yam</p>
                             </div>
@@ -801,12 +1101,20 @@
                         </div>
                         <div class="grid md:grid-cols-2 gap-6">
                             <div>
-                                <h4 class="font-semibold text-amber-700 mb-3 text-lg">Breakfast</h4>
+                                <h4 class="font-semibold text-amber-700 mb-3 text-lg flex items-center gap-2">
+                                    <span class="text-2xl">🌅</span>
+                                    Breakfast
+                                    <span class="text-xl">🥞</span>
+                                </h4>
                                 <div class="meal-name">Colorful Noodles Bowl</div>
                                 <p class="text-gray-700 leading-relaxed"><strong>Noodles</strong> • Diced chicken • All Coloured Bell Pepper • Pickle • Tasty Broccoli • Omelet Egg • Fresh Orange Juice</p>
                             </div>
                             <div>
-                                <h4 class="font-semibold text-amber-700 mb-3 text-lg">Dinner</h4>
+                                <h4 class="font-semibold text-amber-700 mb-3 text-lg flex items-center gap-2">
+                                    <span class="text-2xl">🌙</span>
+                                    Dinner
+                                    <span class="text-xl">🍽️</span>
+                                </h4>
                                 <div class="meal-name">Delta Coconut Rice</div>
                                 <p class="text-gray-700 leading-relaxed">Delta Coconut Rice • Read Sweat Stew • Well Fried Catfish • Assorted • Plantain</p>
                             </div>
@@ -851,7 +1159,11 @@
                     <h2 class="font-playfair text-3xl font-bold">WEEK 6 – MEAL PLAN</h2>
                 </div>
                 
-                <div class="space-y-6">
+                <div class="space-y-8 relative">
+                    <!-- Decorative floating elements -->
+                    <div class="absolute -top-4 -right-4 text-4xl opacity-20 animate-spin" style="animation-duration: 20s;">⭐</div>
+                    <div class="absolute top-1/4 -left-6 text-3xl opacity-15 animate-bounce" style="animation-delay: 1s;">🌟</div>
+                    <div class="absolute bottom-1/4 -right-8 text-5xl opacity-10 animate-pulse" style="animation-delay: 2s;">✨</div>
                     <!-- Friday -->
                     <div class="meal-card bg-white rounded-lg p-6 shadow-md" data-day="friday">
                         <div class="day-label text-white px-4 py-2 rounded-lg inline-block mb-4">
@@ -859,12 +1171,20 @@
                         </div>
                         <div class="grid md:grid-cols-2 gap-6">
                             <div>
-                                <h4 class="font-semibold text-amber-700 mb-3 text-lg">Breakfast</h4>
+                                <h4 class="font-semibold text-amber-700 mb-3 text-lg flex items-center gap-2">
+                                    <span class="text-2xl">🌅</span>
+                                    Breakfast
+                                    <span class="text-xl">🥞</span>
+                                </h4>
                                 <div class="meal-name">Boiled Tubers & Veggie Sauce</div>
                                 <p class="text-gray-700 leading-relaxed">Boiled Yam, Sweet Potatoes, Ripe Plantain • Vegetable Sauce • Smoked Titus Fish • Orange Juice</p>
                             </div>
                             <div>
-                                <h4 class="font-semibold text-amber-700 mb-3 text-lg">Dinner</h4>
+                                <h4 class="font-semibold text-amber-700 mb-3 text-lg flex items-center gap-2">
+                                    <span class="text-2xl">🌙</span>
+                                    Dinner
+                                    <span class="text-xl">🍽️</span>
+                                </h4>
                                 <div class="meal-name">Avocado Prawn Salad</div>
                                 <p class="text-gray-700 leading-relaxed">Avocado Prawn Salad • Sauce Prawn • Diced Chicken • Avocado • Boiled Egg • broccoli • cauliflower • Raisins • Tangerine • All Bell Pepper • Lettuce + Pickle • Mix Mayo Sauce • Orange Juice</p>
                             </div>
@@ -878,12 +1198,20 @@
                         </div>
                         <div class="grid md:grid-cols-2 gap-6">
                             <div>
-                                <h4 class="font-semibold text-amber-700 mb-3 text-lg">Breakfast</h4>
+                                <h4 class="font-semibold text-amber-700 mb-3 text-lg flex items-center gap-2">
+                                    <span class="text-2xl">🌅</span>
+                                    Breakfast
+                                    <span class="text-xl">🥞</span>
+                                </h4>
                                 <div class="meal-name">Chinese Beef & Broccoli</div>
                                 <p class="text-gray-700 leading-relaxed"><strong>Chinese Beef and Broccoli sauce</strong> • Boiled Basmati rice • Pineapple Juice</p>
                             </div>
                             <div>
-                                <h4 class="font-semibold text-amber-700 mb-3 text-lg">Dinner</h4>
+                                <h4 class="font-semibold text-amber-700 mb-3 text-lg flex items-center gap-2">
+                                    <span class="text-2xl">🌙</span>
+                                    Dinner
+                                    <span class="text-xl">🍽️</span>
+                                </h4>
                                 <div class="meal-name">Traditional Owo Soup</div>
                                 <p class="text-gray-700 leading-relaxed">Owo soup • Snail • Tiko (Dried Beef) • Lady Dried Fish • Dried catfish • Prawn • Perewinkle • Native potash • Starch</p>
                             </div>
@@ -897,12 +1225,20 @@
                         </div>
                         <div class="grid md:grid-cols-2 gap-6">
                             <div>
-                                <h4 class="font-semibold text-amber-700 mb-3 text-lg">Breakfast</h4>
+                                <h4 class="font-semibold text-amber-700 mb-3 text-lg flex items-center gap-2">
+                                    <span class="text-2xl">🌅</span>
+                                    Breakfast
+                                    <span class="text-xl">🥞</span>
+                                </h4>
                                 <div class="meal-name">Fried Fish & Fries</div>
                                 <p class="text-gray-700 leading-relaxed"><strong>Fried Croaker or Fried Red Snapper</strong> • French Fries • Coleslaw • Pepper sauce and Ketchup • Orange Juice</p>
                             </div>
                             <div>
-                                <h4 class="font-semibold text-amber-700 mb-3 text-lg">Dinner</h4>
+                                <h4 class="font-semibold text-amber-700 mb-3 text-lg flex items-center gap-2">
+                                    <span class="text-2xl">🌙</span>
+                                    Dinner
+                                    <span class="text-xl">🍽️</span>
+                                </h4>
                                 <div class="meal-name">Brown Rice & Fish Special</div>
                                 <p class="text-gray-700 leading-relaxed">Brown Rice • Sweet Red Stew • Well Fried Red Snapper • Well Fried Catfish • Banana or plantain • Maltina</p>
                             </div>
@@ -916,12 +1252,20 @@
                         </div>
                         <div class="grid md:grid-cols-2 gap-6">
                             <div>
-                                <h4 class="font-semibold text-amber-700 mb-3 text-lg">Breakfast</h4>
+                                <h4 class="font-semibold text-amber-700 mb-3 text-lg flex items-center gap-2">
+                                    <span class="text-2xl">🌅</span>
+                                    Breakfast
+                                    <span class="text-xl">🥞</span>
+                                </h4>
                                 <div class="meal-name">Chicken & Beef Shawarma</div>
                                 <p class="text-gray-700 leading-relaxed">Chicken & beef Shawarma/Tacos • Avocado paste • Orange and Pineapple Juice</p>
                             </div>
                             <div>
-                                <h4 class="font-semibold text-amber-700 mb-3 text-lg">Dinner</h4>
+                                <h4 class="font-semibold text-amber-700 mb-3 text-lg flex items-center gap-2">
+                                    <span class="text-2xl">🌙</span>
+                                    Dinner
+                                    <span class="text-xl">🍽️</span>
+                                </h4>
                                 <div class="meal-name">Delta Egusi Pepper Soup</div>
                                 <p class="text-gray-700 leading-relaxed">Delta Egusi Pepper Soup • Pork Beef • Beef • Fresh Catfish • Eba</p>
                             </div>
@@ -935,12 +1279,20 @@
                         </div>
                         <div class="grid md:grid-cols-2 gap-6">
                             <div>
-                                <h4 class="font-semibold text-amber-700 mb-3 text-lg">Breakfast</h4>
+                                <h4 class="font-semibold text-amber-700 mb-3 text-lg flex items-center gap-2">
+                                    <span class="text-2xl">🌅</span>
+                                    Breakfast
+                                    <span class="text-xl">🥞</span>
+                                </h4>
                                 <div class="meal-name">Classic Spaghetti Bolognese</div>
                                 <p class="text-gray-700 leading-relaxed">Spaghetti Bolognese • 1 cup of cold Almond Milk</p>
                             </div>
                             <div>
-                                <h4 class="font-semibold text-amber-700 mb-3 text-lg">Dinner</h4>
+                                <h4 class="font-semibold text-amber-700 mb-3 text-lg flex items-center gap-2">
+                                    <span class="text-2xl">🌙</span>
+                                    Dinner
+                                    <span class="text-xl">🍽️</span>
+                                </h4>
                                 <div class="meal-name">Village Concoction Rice</div>
                                 <p class="text-gray-700 leading-relaxed">Village Concoction Rice • Fish • Well fried Beef • Banana • Coke or Fanta</p>
                             </div>
@@ -1318,5 +1670,5 @@
             }
         }, 1000);
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'972aa466133e9e0a',t:'MTc1NTc4NDY3NC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'972aae0350a49e0a',t:'MTc1NTc4NTA2OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
