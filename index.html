@@ -197,7 +197,7 @@
     <!-- Header -->
     <header class="text-center py-12 bg-gradient-to-br from-orange-400 via-red-500 to-pink-500 shadow-lg relative overflow-hidden">
         <!-- Food Background Pattern -->
-        <div class="absolute inset-0 opacity-20">
+        <div class="absolute inset-0 opacity-20 pointer-events-none">
             <div class="absolute top-4 left-8 text-6xl animate-bounce" style="animation-delay: 0s;">🍕</div>
             <div class="absolute top-16 right-12 text-5xl animate-bounce" style="animation-delay: 0.5s;">🍔</div>
             <div class="absolute top-8 left-1/4 text-4xl animate-bounce" style="animation-delay: 1s;">🍝</div>
@@ -238,7 +238,7 @@
         </div>
         
         <!-- Current Date & Week Info -->
-        <div class="mt-6 bg-gradient-to-r from-amber-100 to-orange-100 p-4 rounded-lg mx-auto max-w-md live-indicator">
+        <div class="relative z-20 mt-6 bg-gradient-to-r from-amber-100 to-orange-100 p-4 rounded-lg mx-auto max-w-md live-indicator">
             <div class="flex items-center justify-center gap-2 mb-2">
                 <span class="text-2xl">🔴</span>
                 <span class="current-time text-sm font-bold">LIVE</span>
@@ -251,8 +251,8 @@
         </div>
         
         <!-- Week Navigation -->
-        <div class="mt-6 flex justify-center gap-4 flex-wrap">
-            <button class="week-btn px-4 py-2 bg-amber-500 text-white rounded-lg hover:bg-amber-600 transition-colors" data-week="1">Week 1</button>
+        <div class="relative z-20 mt-6 flex justify-center gap-4 flex-wrap">
+            <button class="week-btn relative z-30 px-4 py-2 bg-amber-500 text-white rounded-lg hover:bg-amber-600 transition-colors" data-week="1">Week 1</button>
             <button class="week-btn px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 transition-colors" data-week="2">Week 2</button>
             <button class="week-btn px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 transition-colors" data-week="3">Week 3</button>
             <button class="week-btn px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 transition-colors" data-week="4">Week 4</button>
@@ -1331,344 +1331,310 @@
         </div>
     </div>
 
-    <script>
-        // Week cycling functionality - LIVE AUTOMATIC CYCLING
-        function getCurrentWeek() {
-            // Using August 16, 2025 as Week 2 start date (Friday) - since today (Aug 21) is Week 2
-            const week2StartDate = new Date(2025, 7, 16); // August 16, 2025 (Friday of Week 2)
-            
-            const today = new Date();
-            const daysDiff = Math.floor((today - week2StartDate) / (1000 * 60 * 60 * 24));
-            const weeksDiff = Math.floor(daysDiff / 7);
-            
-            // Calculate current week in the 6-week cycle (starting from Week 2)
-            let currentWeek = ((weeksDiff % 6) + 2);
-            
-            // Handle cycle wrapping (after Week 6, go to Week 1)
-            if (currentWeek > 6) {
-                currentWeek = currentWeek - 6;
-            }
-            
-            // Handle negative values (dates before start date)
-            if (currentWeek <= 0) {
-                currentWeek = 6 + currentWeek;
-            }
-            
-            return currentWeek;
-        }
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    // Week cycling functionality - LIVE AUTOMATIC CYCLING
+    function getCurrentWeek() {
+    // Anchor: Thu Aug 21, 2025 is INSIDE Week 2 (rest day Thu)
+    // Our week structure is Fri..Tue + Wed/Thu rest, so the week "starts" on Friday.
+    // Start-of-week (Friday) for that anchored week = Thu 21 Aug - 6 days = Fri 15 Aug 2025.
+    const anchorInside = new Date(2025, 7, 21); // Thu Aug 21, 2025 (0-based month)
+    const anchorWeekStartFri = new Date(
+        anchorInside.getFullYear(),
+        anchorInside.getMonth(),
+        anchorInside.getDate() - 6
+    ); // Fri Aug 15, 2025
 
-        function getWeekDates(weekNum) {
-            // Calculate based on Week 2 starting August 16, 2025 (Friday)
-            const week2StartDate = new Date(2025, 7, 16); // August 16, 2025 (Friday)
-            
-            // Find current cycle start date
-            const today = new Date();
-            const daysSinceWeek2 = Math.floor((today - week2StartDate) / (1000 * 60 * 60 * 24));
-            const cyclesSinceStart = Math.floor(daysSinceWeek2 / (7 * 6)); // 6 weeks per cycle
-            
-            // Calculate the start of the current 6-week cycle
-            const currentCycleStart = new Date(week2StartDate);
-            currentCycleStart.setDate(week2StartDate.getDate() + (cyclesSinceStart * 7 * 6));
-            
-            // Calculate offset for the requested week (Week 2 = 0 offset, Week 3 = 1 week, etc.)
-            let weekOffset;
-            if (weekNum >= 2) {
-                weekOffset = weekNum - 2; // Week 2=0, Week 3=1, Week 4=2, Week 5=3, Week 6=4
-            } else {
-                weekOffset = weekNum + 4; // Week 1=5 (comes after Week 6 in cycle)
-            }
-            
-            // Calculate the start of the requested week within current cycle
-            const weekStart = new Date(currentCycleStart);
-            weekStart.setDate(currentCycleStart.getDate() + (weekOffset * 7));
-            
-            const dates = {};
-            const dayNames = ['friday', 'saturday', 'sunday', 'monday', 'tuesday'];
-            
-            dayNames.forEach((day, index) => {
-                const date = new Date(weekStart);
-                date.setDate(weekStart.getDate() + index);
-                dates[day] = date;
-            });
-            
-            return dates;
-        }
+    // Normalize to midnight to avoid time-of-day drift
+    const toMid = d => new Date(d.getFullYear(), d.getMonth(), d.getDate());
+    const todayMid = toMid(new Date());
+    const anchorFriMid = toMid(anchorWeekStartFri);
 
-        function updateDateDisplays(weekNum) {
-            const dates = getWeekDates(weekNum);
-            const options = { month: 'short', day: 'numeric' };
-            
-            // Update individual day dates
-            Object.keys(dates).forEach(day => {
-                const dateStr = dates[day].toLocaleDateString('en-US', options);
-                document.querySelectorAll(`[data-day="${day}"] .date-display`).forEach(el => {
-                    el.textContent = `(${dateStr})`;
-                });
-            });
-            
-            // Update free choice days (Wednesday & Thursday)
-            const wednesdayDate = new Date(dates.tuesday);
-            wednesdayDate.setDate(wednesdayDate.getDate() + 1); // Day after Tuesday
-            const thursdayDate = new Date(dates.tuesday);
-            thursdayDate.setDate(thursdayDate.getDate() + 2); // Two days after Tuesday
-            
-            const wedStr = `(${wednesdayDate.getDate()} ${wednesdayDate.toLocaleDateString('en-US', { month: 'short' })})`;
-            const thuStr = `(${thursdayDate.getDate()} ${thursdayDate.toLocaleDateString('en-US', { month: 'short' })})`;
-            
-            document.querySelectorAll('.free-choice-wed').forEach(el => {
-                el.textContent = wedStr;
-            });
-            document.querySelectorAll('.free-choice-thu').forEach(el => {
-                el.textContent = thuStr;
-            });
-            
-            // Update week range
-            const weekStart = dates.friday;
-            const weekEnd = new Date(dates.tuesday);
-            weekEnd.setDate(weekEnd.getDate() + 2); // Add Wed & Thu
-            
-            const startStr = weekStart.toLocaleDateString('en-US', options);
-            const endStr = weekEnd.toLocaleDateString('en-US', options);
-            
-            document.getElementById('week-date-range').textContent = `${startStr} - ${endStr}`;
-        }
+    // Difference in days from the start Friday of the anchored Week 2
+    const diffDays = Math.floor((todayMid - anchorFriMid) / 86400000); // 86_400_000 ms/day
+    const diffWeeks = Math.floor(diffDays / 7); // how many whole weeks since that Friday
 
-        function showWeek(weekNum) {
-            // Hide all weeks
-            document.querySelectorAll('.week-content').forEach(week => {
-                week.classList.add('hidden');
-            });
-            
-            // Show selected week
-            document.getElementById(`week-${weekNum}`).classList.remove('hidden');
-            
-            // Update buttons
-            document.querySelectorAll('.week-btn').forEach(btn => {
-                btn.classList.remove('bg-amber-500', 'text-white');
-                btn.classList.add('bg-gray-300', 'text-gray-700');
-            });
-            
-            document.querySelector(`[data-week="${weekNum}"]`).classList.remove('bg-gray-300', 'text-gray-700');
-            document.querySelector(`[data-week="${weekNum}"]`).classList.add('bg-amber-500', 'text-white');
-            
-            // Update date displays
-            updateDateDisplays(weekNum);
-            
-            // Update current day status for the displayed week
-            updateCurrentDay();
-        }
+    // Week 2 is the anchor (offset 0). Cycle length is 6 weeks.
+    const mod6 = ((diffWeeks % 6) + 6) % 6; // safe modulo in 0..5
+    let currentWeek = 2 + mod6;             // 2..7
+    if (currentWeek > 6) currentWeek -= 6;  // wrap to 1..6
 
-        function updateCurrentInfo() {
-            const today = new Date();
-            const currentWeek = getCurrentWeek();
-            
-            // Update current date
-            document.getElementById('current-date').textContent = today.toLocaleDateString('en-US', { 
-                weekday: 'long', 
-                year: 'numeric', 
-                month: 'long', 
-                day: 'numeric' 
-            });
-            
-            // Update current time (LIVE)
-            document.getElementById('current-time').textContent = today.toLocaleTimeString('en-US', {
-                hour: '2-digit',
-                minute: '2-digit',
-                second: '2-digit',
-                hour12: true
-            });
-            
-            // Update current week
-            document.getElementById('auto-week').textContent = `Week ${currentWeek}`;
-        }
+    return currentWeek;
+}
 
-        // Current day highlighting with status indicators - FIXED
-        function updateCurrentDay() {
-            const today = new Date();
-            
-            // Get the currently displayed week
-            const activeWeek = document.querySelector('.week-content:not(.hidden)');
-            if (!activeWeek) return;
-            
-            const displayedWeekNum = parseInt(activeWeek.id.split('-')[1]);
-            const weekDates = getWeekDates(displayedWeekNum);
-            
-            document.querySelectorAll('.meal-card').forEach(card => {
-                const dayLabel = card.querySelector('.day-label');
-                const dayName = card.dataset.day;
-                
-                if (dayLabel && dayName && weekDates[dayName]) {
-                    // Remove all status classes
-                    card.classList.remove('current-day', 'past-day', 'upcoming-day');
-                    dayLabel.classList.remove('current', 'past', 'upcoming');
-                    
-                    // Remove existing status indicators
-                    const existingStatus = dayLabel.querySelector('.status-indicator');
-                    if (existingStatus) existingStatus.remove();
-                    
-                    const dayDate = weekDates[dayName];
-                    const todayDate = new Date(today.getFullYear(), today.getMonth(), today.getDate());
-                    const cardDate = new Date(dayDate.getFullYear(), dayDate.getMonth(), dayDate.getDate());
-                    
-                    let statusText = '';
-                    let statusClass = '';
-                    
-                    if (cardDate.getTime() === todayDate.getTime()) {
-                        statusText = '🔴 TODAY';
-                        statusClass = 'current';
-                        card.classList.add('current-day');
-                        dayLabel.classList.add('current');
-                    } else if (cardDate < todayDate) {
-                        statusText = '✅ DONE';
-                        statusClass = 'past';
-                        card.classList.add('past-day');
-                        dayLabel.classList.add('past');
-                    } else {
-                        statusText = '⏳ UPCOMING';
-                        statusClass = 'upcoming';
-                        card.classList.add('upcoming-day');
-                        dayLabel.classList.add('upcoming');
-                    }
-                    
-                    // Add status indicator
-                    const statusSpan = document.createElement('span');
-                    statusSpan.className = `status-indicator text-xs ml-2 px-2 py-1 rounded-full bg-white bg-opacity-20 ${statusClass}`;
-                    statusSpan.textContent = statusText;
-                    dayLabel.querySelector('h3').appendChild(statusSpan);
-                }
-            });
-        }
 
-        // Initialize
-        let currentWeek = getCurrentWeek();
-        let userSelectedWeek = null; // Track if user manually selected a week
-        let lastKnownWeek = currentWeek; // Track week changes
+    function getWeekDates(weekNum) {
+    // Anchor the cycle so that Thu Aug 21, 2025 is inside Week 2.
+    // Therefore, the Week-2 Friday = Fri Aug 15, 2025.
+    const anchorInside = new Date(2025, 7, 21); // Thu Aug 21, 2025
+    const week2StartFri = new Date(
+        anchorInside.getFullYear(),
+        anchorInside.getMonth(),
+        anchorInside.getDate() - 6
+    ); // Fri Aug 15, 2025
+
+    const toMid = d => new Date(d.getFullYear(), d.getMonth(), d.getDate());
+    const todayMid = toMid(new Date());
+    const baseFri = toMid(week2StartFri);
+
+    // 1 cycle = 6 weeks = 42 days
+    const cycleLenDays = 42;
+    const diffDaysFromBase = Math.floor((todayMid - baseFri) / 86400000);
+    const cyclesSince = Math.floor(diffDaysFromBase / cycleLenDays);
+
+    // Start Friday of the current 6-week cycle that contains "today"
+    const currentCycleStartFri = new Date(baseFri);
+    currentCycleStartFri.setDate(currentCycleStartFri.getDate() + cyclesSince * cycleLenDays);
+
+    // Offset for requested week within the cycle:
+    // Week 2 = +0d, Week 3 = +7d, Week 4 = +14d, Week 5 = +21d, Week 6 = +28d, Week 1 = +35d
+    const weekOffsetDays = (weekNum >= 2) ? (weekNum - 2) * 7 : 5 * 7;
+
+    // Friday of the requested week
+    const weekStartFri = new Date(currentCycleStartFri);
+    weekStartFri.setDate(weekStartFri.getDate() + weekOffsetDays);
+
+    // Build the Fri..Tue map
+    const dates = {};
+    const dayNames = ['friday', 'saturday', 'sunday', 'monday', 'tuesday'];
+    dayNames.forEach((day, i) => {
+        const d = new Date(weekStartFri);
+        d.setDate(weekStartFri.getDate() + i);
+        dates[day] = d;
+    });
+
+    return dates;
+}
+
+    function updateDateDisplays(weekNum) {
+        const dates = getWeekDates(weekNum);
+        const options = { month: 'short', day: 'numeric' };
         
-        updateCurrentInfo();
-        showWeek(currentWeek);
+        // Update individual day dates
+        Object.keys(dates).forEach(day => {
+            const dateStr = dates[day].toLocaleDateString('en-US', options);
+            document.querySelectorAll(`[data-day="${day}"] .date-display`).forEach(el => {
+                el.textContent = `(${dateStr})`;
+            });
+        });
         
-        // Auto-scroll to current day section on page load (ONLY for current week)
-        setTimeout(() => {
-            const today = new Date();
-            const dayOfWeek = today.getDay(); // 0 = Sunday, 3 = Wednesday, 4 = Thursday
-            const currentWeekNum = getCurrentWeek();
-            
-            console.log('Today is day:', dayOfWeek, 'Current week:', currentWeekNum, 'Looking for free choice section...');
-            
-            // Only auto-scroll if we're viewing the current week
-            const activeWeek = document.querySelector('.week-content:not(.hidden)');
-            const isCurrentWeek = activeWeek && activeWeek.id === `week-${currentWeekNum}`;
-            
-            if (isCurrentWeek && (dayOfWeek === 3 || dayOfWeek === 4)) { // Wednesday or Thursday - Free Choice Days!
-                // Wait a bit more for the page to fully render
-                setTimeout(() => {
-                    const restDay = activeWeek.querySelector('.rest-day');
-                    console.log('Found rest day element in current week:', restDay);
-                    
-                    if (restDay) {
-                        // Scroll with more aggressive settings
-                        restDay.scrollIntoView({ 
-                            behavior: 'smooth', 
-                            block: 'start',
-                            inline: 'nearest'
-                        });
-                        
-                        // Alternative scroll method as backup
-                        setTimeout(() => {
-                            window.scrollTo({
-                                top: restDay.offsetTop - 100,
-                                behavior: 'smooth'
-                            });
-                        }, 500);
-                        
-                        // Add a subtle highlight effect
-                        setTimeout(() => {
-                            restDay.style.boxShadow = '0 4px 20px rgba(245, 158, 11, 0.3)';
-                            setTimeout(() => {
-                                restDay.style.boxShadow = '';
-                            }, 2000);
-                        }, 800);
-                    }
-                }, 500);
-            } else if (isCurrentWeek) {
-                // For other days, scroll to the current day's meal card (only in current week)
-                const dayNames = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
-                const currentDay = dayNames[dayOfWeek];
-                const currentDayCard = activeWeek.querySelector(`[data-day="${currentDay}"]`);
-                
-                if (currentDayCard) {
-                    currentDayCard.scrollIntoView({ 
-                        behavior: 'smooth', 
-                        block: 'center' 
-                    });
-                }
-            }
-        }, 1500);
+        // Update free choice days (Wednesday & Thursday)
+        const wednesdayDate = new Date(dates.tuesday);
+        wednesdayDate.setDate(wednesdayDate.getDate() + 1); // Day after Tuesday
+        const thursdayDate = new Date(dates.tuesday);
+        thursdayDate.setDate(thursdayDate.getDate() + 2); // Two days after Tuesday
+        
+        const wedStr = `(${wednesdayDate.getDate()} ${wednesdayDate.toLocaleDateString('en-US', { month: 'short' })})`;
+        const thuStr = `(${thursdayDate.getDate()} ${thursdayDate.toLocaleDateString('en-US', { month: 'short' })})`;
+        
+        document.querySelectorAll('.free-choice-wed').forEach(el => { el.textContent = wedStr; });
+        document.querySelectorAll('.free-choice-thu').forEach(el => { el.textContent = thuStr; });
+        
+        // Update week range
+        const weekStart = dates.friday;
+        const weekEnd = new Date(dates.tuesday);
+        weekEnd.setDate(weekEnd.getDate() + 2); // Add Wed & Thu
+        
+        const startStr = weekStart.toLocaleDateString('en-US', options);
+        const endStr = weekEnd.toLocaleDateString('en-US', options);
+        
+        document.getElementById('week-date-range').textContent = `${startStr} - ${endStr}`;
+    }
 
-        // Week navigation
+    function showWeek(weekNum) {
+        // Hide all weeks
+        document.querySelectorAll('.week-content').forEach(week => { week.classList.add('hidden'); });
+        
+        // Show selected week
+        const target = document.getElementById(`week-${weekNum}`);
+        if (target) target.classList.remove('hidden');
+        
+        // Update buttons
         document.querySelectorAll('.week-btn').forEach(btn => {
-            btn.addEventListener('click', function() {
-                const weekNum = parseInt(this.dataset.week);
-                userSelectedWeek = weekNum; // Remember user's choice
-                showWeek(weekNum);
-            });
+            btn.classList.remove('bg-amber-500', 'text-white');
+            btn.classList.add('bg-gray-300', 'text-gray-700');
         });
+        const activeBtn = document.querySelector(`[data-week="${weekNum}"]`);
+        if (activeBtn) {
+            activeBtn.classList.remove('bg-gray-300', 'text-gray-700');
+            activeBtn.classList.add('bg-amber-500', 'text-white');
+        }
+        
+        // Update date displays & current-day highlights
+        updateDateDisplays(weekNum);
+        updateCurrentDay();
+    }
 
-        // Choice button interactions
-        document.querySelectorAll('.choice-btn').forEach(btn => {
-            btn.addEventListener('click', function() {
-                const messages = [
-                    "Great choice! Enjoy your meal! 🎉",
-                    "Perfect! Have fun with your food adventure! 🌟",
-                    "Awesome! Treat yourself well! 💖"
-                ];
-                
-                const randomMessage = messages[Math.floor(Math.random() * messages.length)];
-                alert(randomMessage);
-            });
+    function updateCurrentInfo() {
+        const today = new Date();
+        const currentWeek = getCurrentWeek();
+        
+        // Update current date
+        const cd = document.getElementById('current-date');
+        if (cd) cd.textContent = today.toLocaleDateString('en-US', { 
+            weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' 
         });
+        
+        // Update current time (LIVE)
+        const ct = document.getElementById('current-time');
+        if (ct) ct.textContent = today.toLocaleTimeString('en-US', {
+            hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true
+        });
+        
+        // Update current week
+        const aw = document.getElementById('auto-week');
+        if (aw) aw.textContent = `Week ${currentWeek}`;
+    }
 
-        // Update every SECOND to keep it truly LIVE with automatic week switching
-        setInterval(() => {
-            updateCurrentInfo();
-            updateCurrentDay();
-            
-            // Check if the week has changed and auto-switch if user hasn't manually selected
-            const newCurrentWeek = getCurrentWeek();
-            if (newCurrentWeek !== lastKnownWeek && userSelectedWeek === null) {
-                console.log(`🔄 LIVE UPDATE: Week changed from ${lastKnownWeek} to ${newCurrentWeek}! Auto-switching...`);
-                lastKnownWeek = newCurrentWeek;
-                currentWeek = newCurrentWeek;
-                showWeek(currentWeek);
-                
-                // Show notification to user about the week change
-                const notification = document.createElement('div');
-                notification.className = 'fixed top-4 right-4 bg-gradient-to-r from-green-500 to-emerald-600 text-white px-6 py-3 rounded-lg shadow-lg z-50 animate-bounce';
-                notification.innerHTML = `
-                    <div class="flex items-center gap-2">
-                        <span class="text-xl">🎉</span>
-                        <span class="font-semibold">Week ${newCurrentWeek} Started!</span>
-                    </div>
-                `;
-                document.body.appendChild(notification);
-                
-                // Remove notification after 5 seconds
-                setTimeout(() => {
-                    notification.remove();
-                }, 5000);
-            }
-            
-            // Reset user selection after 1 hour to allow auto-switching again
-            if (userSelectedWeek !== null) {
-                const oneHour = 60 * 60 * 1000; // 1 hour in milliseconds
-                setTimeout(() => {
-                    if (userSelectedWeek !== null) {
-                        console.log('🔄 Resetting user selection - enabling auto-switching again');
-                        userSelectedWeek = null;
-                    }
-                }, oneHour);
-            }
-        }, 1000);
-    </script>
+    // Current day highlighting with status indicators
+    function updateCurrentDay() {
+    const today = new Date();
+    const todayMid = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+
+    // Only work inside the currently visible week
+    const activeWeek = document.querySelector('.week-content:not(.hidden)');
+    if (!activeWeek) return;
+
+    const displayedWeekNum = parseInt(activeWeek.id.split('-')[1], 10);
+    const weekDates = getWeekDates(displayedWeekNum);
+
+    // Reset & set statuses for the visible week's cards
+    let scrollTarget = null;
+
+    activeWeek.querySelectorAll('.meal-card').forEach(card => {
+        const dayLabel = card.querySelector('.day-label');
+        const dayName = card.dataset.day; // 'friday'...'tuesday'
+        if (!dayLabel || !dayName || !weekDates[dayName]) return;
+
+        // wipe previous state
+        card.classList.remove('current-day', 'past-day', 'upcoming-day');
+        dayLabel.classList.remove('current', 'past', 'upcoming');
+        const existing = dayLabel.querySelector('.status-indicator');
+        if (existing) existing.remove();
+
+        const d = weekDates[dayName];
+        const cardMid = new Date(d.getFullYear(), d.getMonth(), d.getDate());
+
+        let statusText = '';
+        let statusClass = '';
+
+        if (cardMid.getTime() === todayMid.getTime()) {
+            statusText = '🔴 TODAY';
+            statusClass = 'current';
+            card.classList.add('current-day');
+            dayLabel.classList.add('current');
+            scrollTarget = card; // default target if not Wed/Thu
+        } else if (cardMid < todayMid) {
+            statusText = '✅ DONE';
+            statusClass = 'past';
+            card.classList.add('past-day');
+            dayLabel.classList.add('past');
+        } else {
+            statusText = '⏳ UPCOMING';
+            statusClass = 'upcoming';
+            card.classList.add('upcoming-day');
+            dayLabel.classList.add('upcoming');
+        }
+
+        const badge = document.createElement('span');
+        badge.className = `status-indicator text-xs ml-2 px-2 py-1 rounded-full bg-white bg-opacity-20 ${statusClass}`;
+        badge.textContent = statusText;
+        const h3 = dayLabel.querySelector('h3');
+        if (h3) h3.appendChild(badge);
+    });
+
+    // If today is Wed (3) or Thu (4) and we’re viewing the current week,
+    // scroll to the Free Choice block instead of a meal card.
+    const isViewingCurrentWeek = displayedWeekNum === getCurrentWeek();
+    const dow = today.getDay(); // 0 Sun ... 6 Sat
+    if (isViewingCurrentWeek && (dow === 3 || dow === 4)) {
+        const freeChoice = activeWeek.querySelector('.rest-day');
+        if (freeChoice) scrollTarget = freeChoice;
+    }
+
+    // Only auto-scroll once per day/week to avoid jumpiness during the 1s interval updates
+    const scrollKey = `${displayedWeekNum}-${todayMid.toDateString()}`;
+    if (scrollTarget && document.body.dataset.scrollKey !== scrollKey) {
+        document.body.dataset.scrollKey = scrollKey;
+        setTimeout(() => {
+            scrollTarget.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 50);
+    }
+}
+
+    // === INIT ===
+    let currentWeek = getCurrentWeek();
+    let userSelectedWeek = null; // Track if user manually selected a week
+    let lastKnownWeek = currentWeek; // Track week changes
+    
+    updateCurrentInfo();
+    showWeek(currentWeek);
+
+    // Auto-scroll to the correct current day ~3s after first paint
+setTimeout(() => {
+  const wk = getCurrentWeek();
+
+  // Make sure the correct week is visible (Week 2 if today is inside Week 2, etc.)
+  const activeWeek = document.querySelector('.week-content:not(.hidden)');
+  if (!activeWeek || activeWeek.id !== `week-${wk}`) {
+    showWeek(wk);
+  }
+
+  // Clear the “once-per-day/week” scroll guard so this initial scroll is allowed
+  document.body.dataset.scrollKey = '';
+
+  // This will mark TODAY / DONE / UPCOMING and perform the scroll
+  updateCurrentDay();
+}, 3000);
+
+
+    // Week navigation (bind after DOM is ready)
+    document.querySelectorAll('.week-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const weekNum = parseInt(this.dataset.week);
+            userSelectedWeek = weekNum;
+            showWeek(weekNum);
+        });
+    });
+
+    // Choice button interactions
+    document.querySelectorAll('.choice-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const messages = [
+                "Great choice! Enjoy your meal! 🎉",
+                "Perfect! Have fun with your food adventure! 🌟",
+                "Awesome! Treat yourself well! 💖"
+            ];
+            const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+            alert(randomMessage);
+        });
+    });
+
+    // LIVE updates
+    setInterval(() => {
+        updateCurrentInfo();
+        updateCurrentDay();
+        
+        // Auto-switch week if needed
+        const newCurrentWeek = getCurrentWeek();
+        if (newCurrentWeek !== lastKnownWeek && userSelectedWeek === null) {
+            lastKnownWeek = newCurrentWeek;
+            currentWeek = newCurrentWeek;
+            showWeek(currentWeek);
+            const notification = document.createElement('div');
+            notification.className = 'fixed top-4 right-4 bg-gradient-to-r from-green-500 to-emerald-600 text-white px-6 py-3 rounded-lg shadow-lg z-50';
+            notification.innerHTML = `<div class="flex items-center gap-2"><span class="text-xl">🎉</span><span class="font-semibold">Week ${newCurrentWeek} Started!</span></div>`;
+            document.body.appendChild(notification);
+            setTimeout(() => { notification.remove(); }, 5000);
+        }
+        
+        // Reset user selection after 1 hour
+        if (userSelectedWeek !== null) {
+            const oneHour = 60 * 60 * 1000;
+            setTimeout(() => { if (userSelectedWeek !== null) userSelectedWeek = null; }, oneHour);
+        }
+    }, 1000);
+}); // end DOMContentLoaded
+</script>
 <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'972aae0350a49e0a',t:'MTc1NTc4NTA2OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
